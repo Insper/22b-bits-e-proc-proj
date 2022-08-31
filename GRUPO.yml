@@ -1,1 +1,16 @@
-Nome-Grupo: "Macarrao"
+
+{
+  Nome-Grupo: "Fernandinho" 
+}
+
+{
+- user: 1
+  name: Eduarda Domingues
+  git-username: EduardaDominguess  
+  blackboard-username: eduardapd
+
+-user : 5
+ name : Fernando Santos
+ git-username: Fernandovs4
+ blackboard-username: fernandovs4
+}

@@ -1,6 +1,15 @@
- { 
-  "user": "1",
-  "name": "Lucca Hiratsuca Costa",
-  "git-username": "LuccaHiratsuca",
-  "blackboard-username": "luccahc"
-}
+[
+  { 
+    "user": "1",
+    "name": "Alexandre Magno Maciel dos Santos",
+    "git-username": "alemagno10",
+    "blackboard-username": "alexandremms"
+  },
+
+  {
+    "user": "2",
+    "name": "Lucca Hiratsuca Costa",
+    "git-username": "LuccaHiratsuca",
+    "blackboard-username": "luccahc"
+  }
+]

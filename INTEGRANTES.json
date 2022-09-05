@@ -3,6 +3,10 @@ name: Eduardo Schneider Monteiro de Barros
 git-username: eduardosmb
 email: eduardosmb@al.insper.edu
 
+- user: 2
+  name: Erik Leonardo Soares de Oliveira
+  git-username: eriksoaress
+  email: eriklso@al.insper.edu.br
 
 -user: 3
 name: Gustavo Antony de Assis
@@ -14,7 +18,6 @@ email: gustavoa9@al.insper.edu
 name: Matheus Aguiar de Jesus
 git-username: c0d8
 email: matheusaj@al.insper.edu
-
 
 - user: 5
 name: Marcelo Vampré Ferreira Marchetto

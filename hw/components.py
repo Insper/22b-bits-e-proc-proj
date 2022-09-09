@@ -49,7 +49,11 @@ def orNway(a, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        final = a[0]
+        for value in a:
+            if value:
+                final = value
+        q.next = final
 
     return comb
 

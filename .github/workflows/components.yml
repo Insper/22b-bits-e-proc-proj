@@ -29,6 +29,6 @@ jobs:
 
       # ------------- Tests ----------------
 
-      - name: test and16
+      - name: test orNway
         run: |
           pytest hw/test_components.py -k orNway 

@@ -87,11 +87,11 @@ def mux2way(q, a, b, sel):
 
     Mux entre a e b, sel é o seletor
     """
-    foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
+        in_list = [a,b]
+        q.next = in_list[sel]
 
     return comb
 
@@ -108,11 +108,11 @@ def mux4way(q, a, b, c, d, sel):
 
     Mux entre a, b, c, d sel é o seletor
     """
-    foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
+        in_list = [a,b,c,d]
+        q.next = in_list[sel]
 
     return comb
 
@@ -127,7 +127,8 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        in_list = [a,b,c,d, e, f, g, h]
+        q.next = in_list[sel]
 
     return comb
 

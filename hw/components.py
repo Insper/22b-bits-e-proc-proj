@@ -89,7 +89,7 @@ def mux2way(q, a, b, sel):
     b: 16 bits
     sel: 2 bits
 
-    Mux entre a e b, sel é o sel
+    Mux entre a e b, sel é o seletor
     """
     foo = Signal(intbv(0))
 

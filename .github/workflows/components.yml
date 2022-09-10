@@ -29,6 +29,12 @@ jobs:
 
       # ------------- Tests ----------------
 
+
       - name: test orNway
         run: |
           pytest hw/test_components.py -k orNway 
+
+      - name: test mux4way
+        run: |
+          pytest -k test_mux4way -v
+          

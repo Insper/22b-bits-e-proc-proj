@@ -174,7 +174,7 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        q0.next,q1.next,q2.next,q3.next = a if sel == 0 else 0,a if sel == 1 else 0,a if sel == 2 else 0, a if sel == 3 else 0
 
     return comb
 

@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test mux4way
+      - name: test mux8way
         run: |
-          pytest hw/test_components.py -k test_mux4way
+          pytest hw/test_components.py -k test_mux8way

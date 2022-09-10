@@ -28,6 +28,7 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test and16
+      - name: test mux4way
         run: |
-          pytest hw/test_components.py -k and16
+          pytest -k test_mux4way -v
+          

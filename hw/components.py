@@ -72,11 +72,10 @@ def barrelShifter(a, dir, size, q):
     exemplo: a = 0000 1111 0101 1010, dir = 0, size = 3
              q = 0111 1010 1101 0000
     """
-    foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = q.next = a >> size if not dir else a << size #ideia retirada de https://stackoverflow.com/questions/22832615/what-do-and-mean-in-python
 
     return comb
 

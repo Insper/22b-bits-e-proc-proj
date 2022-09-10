@@ -89,14 +89,16 @@ def mux2way(q, a, b, sel):
     b: 16 bits
     sel: 2 bits
 
-    Mux entre a e b, sel é o seletor
+    Mux entre a e b, sel é o sel
     """
     foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if sel == 0:
+            q.next = a 
+        elif sel == 1:
+            q.next = b
     return comb
 
 

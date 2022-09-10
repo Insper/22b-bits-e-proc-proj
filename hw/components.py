@@ -118,7 +118,8 @@ def mux4way(q, a, b, c, d, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        lista = [a,b,c,d]
+        q.next = lista[sel]
 
     return comb
 

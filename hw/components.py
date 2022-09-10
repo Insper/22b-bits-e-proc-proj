@@ -12,11 +12,10 @@ def and16(a, b, q):
 
     and bit a bit entre a e b
     """
-    foo = Signal(0)
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a and b
 
     return comb
 

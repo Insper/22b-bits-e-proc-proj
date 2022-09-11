@@ -32,6 +32,10 @@ jobs:
         run: |
           pytest -k deMux4way 
 
+      - name: test barrelShifter
+        run: |
+          pytest -k barrelShifter
+
       - name: test orNway
         run: |
           pytest hw/test_components.py -k orNway 

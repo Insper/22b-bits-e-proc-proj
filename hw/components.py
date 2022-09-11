@@ -12,11 +12,10 @@ def and16(a, b, q):
 
     and bit a bit entre a e b
     """
-    foo = Signal(0)
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a and b
 
     return comb
 
@@ -32,7 +31,7 @@ def or8way(a, b, c, d, e, f, g, h, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a or b or c or d or e or f or g or h
 
     return comb
 
@@ -49,7 +48,7 @@ def orNway(a, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a[0] or a[1]
 
     return comb
 
@@ -72,8 +71,10 @@ def barrelShifter(a, dir, size, q):
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if dir == 0:
+            q.next = a >> size
+        else:
+            q.next = a << size
     return comb
 
 
@@ -85,8 +86,7 @@ def mux2way(q, a, b, sel):
     b: 16 bits
     sel: 2 bits
 
-    Mux entre a e b, sel é o seletor
-    """
+    Mux entre a e b, sel é o seletor"""
     foo = Signal(intbv(0))
 
     @always_comb
@@ -112,7 +112,21 @@ def mux4way(q, a, b, c, d, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        sel2= str(sel)
+        print(sel2)
+        if sel2 == "0":
+            q.next = a
+        
+        if sel2 == "1":
+            q.next = b
+        
+        if sel2 == "2":
+            q.next = c
+        
+        if sel2 == "3":
+            q.next = d
+       
+        
 
     return comb
 
@@ -150,7 +164,12 @@ def deMux2way(a, q0, q1, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        lista_entradas = [q0,q1]
+        for num in range(0, len(lista_entradas)):
+            if num == sel:
+                lista_entradas[num].next = a
+            else: 
+                lista_entradas[num].next = 0
 
     return comb
 
@@ -167,7 +186,12 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        saidas = [q0, q1, q2, q3]
+        for index in range(0, len(saidas)):
+            if index == sel:
+                saidas[index].next = a
+            else:
+                saidas[index].next = 0
 
     return comb
 

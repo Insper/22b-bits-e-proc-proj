@@ -28,6 +28,20 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test and16
+      - name: test deMux4way
         run: |
-          pytest hw/test_components.py -k and16
+          pytest -k deMux4way 
+
+      - name: test barrelShifter
+        run: |
+          pytest -k barrelShifter
+
+      - name: test orNway
+        run: |
+          pytest hw/test_components.py -k orNway 
+
+      - name: test mux4way
+        run: |
+          pytest -k test_mux4way -v
+          
+

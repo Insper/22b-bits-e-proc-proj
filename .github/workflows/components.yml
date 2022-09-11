@@ -27,6 +27,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Combinacional
+        run: |
+          pytest hw/test_components.py
+
+
       # ------------- Tests ----------------
       - name: test and16
         run: |

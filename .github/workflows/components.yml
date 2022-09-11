@@ -28,6 +28,11 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
+
+      - name: test demux8way
+        run: |
+          pytest hw/test_components.py -k test_deMux8way
+
       - name: test deMux4way
         run: |
           pytest -k deMux4way 

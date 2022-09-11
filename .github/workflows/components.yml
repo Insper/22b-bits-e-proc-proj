@@ -27,7 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+
       # ------------- Tests ----------------
-      - name: test and16
+
+      - name: Test deMux2way
         run: |
-          pytest hw/test_components.py -k and16
+          pytest hw/test_components.py -k deMux2way
+
+      - name: Test deMux4way
+        run: |
+          pytest hw/test_components.py -k deMux4way
+

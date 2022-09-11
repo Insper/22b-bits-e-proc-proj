@@ -146,6 +146,10 @@ def deMux2way(a, q0, q1, sel):
     q1 = 0
     """
 
+    
+
+#recebe entrada a, saida q0, saida q1 e seletor
+
     foo = Signal(intbv(0))
 
     @always_comb

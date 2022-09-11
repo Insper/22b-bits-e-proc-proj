@@ -38,6 +38,3 @@ jobs:
         run: |
           pytest hw/test_components.py -k deMux4way
 
-      - name: Combinacional
-        run: |
-          pytest hw/test_components.py

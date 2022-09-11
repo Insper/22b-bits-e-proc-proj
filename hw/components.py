@@ -228,17 +228,36 @@ def bin2bcd(b, bcd1, bcd0):
     BCD1 = 8
     BCD0 = 2
     """
+    
 
     foo = Signal(intbv(0)[4:])
 
     @always_comb
     def comb():
-        bcd1.next = foo
-        bcd0.next = foo
+
+        
+        contador = 0
+        decimal = 0
+        for i in range(7,0,-1) :
+            decimal += (2**contador)*int(b[i])
+            contador += 1
+        if len(str(decimal))<2 :
+            bcd0.next = decimal
+            bcd1.next = 0
+        else :
+            bcd0.next = int(str(decimal)[0])
+            bcd1.next = int(str(decimal)[1])
+
+
+
+
 
     return comb
+
+
 
 
 # -----------------------------#
 # Conceito A
 # -----------------------------#
+

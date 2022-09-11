@@ -202,6 +202,17 @@ def test_deMux8way():
     sim = Simulation(deMux8way_1, stimulus)
     sim.run()
 
+def transforma_para_binario(decimal):
+    binario = ''
+    for i in range(7,-1,-1):
+        if decimal >= 2**i:
+            decimal = decimal - 2**i
+            binario += '1'
+        else:
+            binario += '0'
+    return binario
+
+
 
 def test_bin2bcd():
     bc0 = Signal(intbv(0)[4:])
@@ -212,7 +223,23 @@ def test_bin2bcd():
 
     @instance
     def stimulus():
-        yield delay(1)
+        lista_binarios = [transforma_para_binario(i) for i in range(0, 99)]
+        lista = [str(i) for i in range(0, 99)]
+
+        for i in lista_binarios:
+            bcd1, bcd0 = bin2bcd(i)
+
+            if len(str(i)) < 2:
+                assert bcd1 == 0
+                assert bcd0 == lista[i]
+            else :
+                assert bcd0 == int(lista[i][1])
+                assert bcd1 == int(lista[i][0])
+
+        
+        
+
+            
 
     sim = Simulation(ic1, stimulus)
     sim.run()

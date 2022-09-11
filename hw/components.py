@@ -261,3 +261,4 @@ def bin2bcd(b, bcd1, bcd0):
 # Conceito A
 # -----------------------------#
 
+print (bin2bcd('01100010'))

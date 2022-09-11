@@ -27,10 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Combinacional
-        run: |
-          pytest hw/test_components.py
-
 
       # ------------- Tests ----------------
       - name: test and16
@@ -44,3 +40,7 @@ jobs:
       - name: Test deMux4way
         run: |
           pytest hw/test_components.py -k deMux4way
+
+      - name: Combinacional
+        run: |
+          pytest hw/test_components.py

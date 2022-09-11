@@ -91,7 +91,8 @@ def mux2way(q, a, b, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        entradas = [a,b]
+        q.next = entradas[sel]
 
     return comb
 
@@ -127,7 +128,10 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        
+        entradas = [a,b,c,d,e,f,g,h]
+        q.next = entradas[sel]
+        # q.next = foo
 
     return comb
 

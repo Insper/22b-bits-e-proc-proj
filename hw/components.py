@@ -16,7 +16,7 @@ def and16(a, b, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = (a and b)
 
     return comb
 
@@ -32,7 +32,7 @@ def or8way(a, b, c, d, e, f, g, h, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = (a or b or c or d or e or f or g or h)
 
     return comb
 
@@ -49,7 +49,11 @@ def orNway(a, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        final = a[0]
+        for value in a:
+            if value:
+                final = value
+        q.next = final
 
     return comb
 
@@ -68,11 +72,10 @@ def barrelShifter(a, dir, size, q):
     exemplo: a = 0000 1111 0101 1010, dir = 0, size = 3
              q = 0111 1010 1101 0000
     """
-    foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = q.next = a >> size if not dir else a << size #ideia retirada de https://stackoverflow.com/questions/22832615/what-do-and-mean-in-python
 
     return comb
 
@@ -91,8 +94,10 @@ def mux2way(q, a, b, sel):
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if sel == 0:
+            q.next = a 
+        elif sel == 1:
+            q.next = b
     return comb
 
 
@@ -112,7 +117,8 @@ def mux4way(q, a, b, c, d, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        lista = [a,b,c,d]
+        q.next = lista[sel]
 
     return comb
 
@@ -127,7 +133,8 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        lista = [a,b,c,d,e,f,g,h]
+        q.next = lista[sel]
 
     return comb
 
@@ -150,7 +157,7 @@ def deMux2way(a, q0, q1, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        q0.next,q1.next = a if sel==0 else 0, a if sel==1 else 0
 
     return comb
 
@@ -167,7 +174,7 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        q0.next,q1.next,q2.next,q3.next = a if sel == 0 else 0,a if sel == 1 else 0,a if sel == 2 else 0, a if sel == 3 else 0
 
     return comb
 
@@ -180,11 +187,9 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
     - Lembre que a saída que não está ativada é 0
     """
 
-    foo = Signal(intbv(0))
-
     @always_comb
     def comb():
-        q0.next = foo
+        q0.next,q1.next,q2.next,q3.next,q4.next,q5.next,q6.next,q7.next = a if sel == 0 else 0,a if sel == 1 else 0,a if sel == 2 else 0, a if sel == 3 else 0, a if sel == 4 else 0, a if sel == 5 else 0, a if sel == 6 else 0, a if sel == 7 else 0
 
     return comb
 

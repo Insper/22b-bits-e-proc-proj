@@ -133,7 +133,7 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
 
 @block
-def deMux2way(a, q0, q1, sel):
+def deMux2way(a, q0, q1, sel): #hardware
     """
     deMux de 2 saídas e uma entrada.
 
@@ -146,15 +146,18 @@ def deMux2way(a, q0, q1, sel):
     q1 = 0
     """
 
-    
-
-#recebe entrada a, saida q0, saida q1 e seletor
-
     foo = Signal(intbv(0))
 
     @always_comb
-    def comb():
-        q0.next = foo
+    def comb(): 
+
+        if sel == 0:
+            q0.next = a
+            q1.next = 0
+
+        else:
+            q0.next = 0
+            q1.next = a
 
     return comb
 
@@ -171,7 +174,18 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+
+        if sel == 0:
+            q0.next = a
+            q1.next = 0
+            q2.next = a
+            q3.next = 0
+            
+        else:
+            q0.next = 0
+            q1.next = a
+            q2.next = 0
+            q3.next = a
 
     return comb
 

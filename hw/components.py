@@ -71,8 +71,10 @@ def barrelShifter(a, dir, size, q):
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if dir == 0:
+            q.next = a >> size
+        else:
+            q.next = a << size
     return comb
 
 
@@ -184,7 +186,12 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        saidas = [q0, q1, q2, q3]
+        for index in range(0, len(saidas)):
+            if index == sel:
+                saidas[index].next = a
+            else:
+                saidas[index].next = 0
 
     return comb
 

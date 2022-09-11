@@ -29,6 +29,9 @@ jobs:
 
       # ------------- Tests ----------------
 
+      - name: test barrelShifter
+        run: |
+          pytest -k barrelShifter
 
       - name: test orNway
         run: |
@@ -38,3 +41,4 @@ jobs:
         run: |
           pytest -k test_mux4way -v
           
+

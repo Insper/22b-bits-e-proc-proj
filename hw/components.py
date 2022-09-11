@@ -31,7 +31,7 @@ def or8way(a, b, c, d, e, f, g, h, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a or b or c or d or e or f or g or h
 
     return comb
 

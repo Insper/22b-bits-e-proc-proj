@@ -126,7 +126,22 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        if sel == 0:
+            q.next = a
+        elif sel == 1:
+            q.next = b
+        elif sel == 2:
+            q.next = c
+        elif sel == 3:
+            q.next = d
+        elif sel == 4:
+            q.next = e
+        elif sel == 5:
+            q.next = f
+        elif sel == 6:
+            q.next = g
+        else:
+            q.next = h
 
     return comb
 

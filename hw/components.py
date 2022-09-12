@@ -178,7 +178,14 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        q0.next = a if sel == 0 else 0
+        q1.next = a if sel == 1 else 0
+        q2.next = a if sel == 2 else 0
+        q3.next = a if sel == 3 else 0
+        q4.next = a if sel == 4 else 0
+        q5.next = a if sel == 5 else 0
+        q6.next = a if sel == 6 else 0
+        q7.next = a if sel == 7 else 0
 
     return comb
 

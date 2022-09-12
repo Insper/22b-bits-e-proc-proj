@@ -31,7 +31,7 @@ def or8way(a, b, c, d, e, f, g, h, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a or b or c or d or e or f or g or h
 
     return comb
 
@@ -71,8 +71,10 @@ def barrelShifter(a, dir, size, q):
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if dir == 0:
+            q.next = a >> size
+        else:
+            q.next = a << size
     return comb
 
 
@@ -89,7 +91,8 @@ def mux2way(q, a, b, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        entradas = [a,b]
+        q.next = entradas[sel]
 
     return comb
 
@@ -139,7 +142,10 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        
+        entradas = [a,b,c,d,e,f,g,h]
+        q.next = entradas[sel]
+        # q.next = foo
 
     return comb
 
@@ -184,7 +190,12 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        saidas = [q0, q1, q2, q3]
+        for index in range(0, len(saidas)):
+            if index == sel:
+                saidas[index].next = a
+            else:
+                saidas[index].next = 0
 
     return comb
 
@@ -199,9 +210,16 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 
     foo = Signal(intbv(0))
 
+
     @always_comb
     def comb():
-        q0.next = foo
+
+        saidas = [q0,q1,q2,q3,q4,q5,q6,q7]
+        for i in range(7):
+            if sel == i:
+                saidas[i].next = a
+            else :
+                saidas[i].next = 0
 
     return comb
 
@@ -234,17 +252,36 @@ def bin2bcd(b, bcd1, bcd0):
     BCD1 = 8
     BCD0 = 2
     """
+    
 
     foo = Signal(intbv(0)[4:])
 
     @always_comb
     def comb():
-        bcd1.next = foo
-        bcd0.next = foo
+
+        
+        contador = 0
+        decimal = 0
+        for i in range(7,0,-1) :
+            decimal += (2**contador)*int(b[i])
+            contador += 1
+        if len(str(decimal))<2 :
+            bcd0.next = decimal
+            bcd1.next = 0
+        else :
+            bcd0.next = int(str(decimal)[0])
+            bcd1.next = int(str(decimal)[1])
+
+
+
+
 
     return comb
+
+
 
 
 # -----------------------------#
 # Conceito A
 # -----------------------------#
+

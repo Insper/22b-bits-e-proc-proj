@@ -206,9 +206,27 @@ def bin2hex(hex0, sw):
 
     @always_comb
     def comb():
-        hex0.next[4:] = sw[4:]
-
-    return comb
+        if sw[4:0] == 0:
+            hex0.next = "1000000"
+        elif sw[4:0] == 1:
+            hex0.next = "1111001"
+        elif sw[4:0] == 2:
+            hex0.next = "0100100"
+        elif sw[4:0] == 3:
+            hex0.next = "0110000"
+        elif sw[4:0] == 4:
+            hex0.next = "0011001"
+        elif sw[4:0] == 5:
+            hex0.next = "0010010"
+        elif sw[4:0] == 6:
+            hex0.next = "0000010"
+        elif sw[4:0] == 7:
+            hex0.next = "1111000"
+        elif sw[4:0] == 8:
+            hex0.next = "0000000"
+        elif sw[4:0] == 9:
+            hex0.next = "0010000"
+    return instances()
 
 
 DIG1 = tuple(i for i in range(10) for _ in range(10)) 

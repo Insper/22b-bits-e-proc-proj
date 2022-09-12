@@ -43,6 +43,10 @@ jobs:
         run: |
           pytest hw/test_components.py -k test_mux4way
 
+      - name: test mux8way
+        run: |
+          pytest hw/test_components.py -k test_mux8way
+
       - name: test deMux8way
         run: |
           pytest hw/test_components.py -k test_deMux8way

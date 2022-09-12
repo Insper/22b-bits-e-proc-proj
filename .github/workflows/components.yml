@@ -51,4 +51,8 @@ jobs:
         run: |
           pytest hw/test_components.py -k test_deMux8way
 
+      - name: test orNway
+        run: |
+          pytest hw/test_components.py -k orNway
+
 

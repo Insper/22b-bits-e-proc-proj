@@ -39,3 +39,7 @@ jobs:
         run: |
           pytest hw/test_components.py -k test_mux2way
 
+      - name: test mux4way
+        run: |
+          pytest hw/test_components.py -k test_mux4way
+

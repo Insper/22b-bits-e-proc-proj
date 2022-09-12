@@ -49,6 +49,12 @@ jobs:
         run: |
           pytest -k test_mux4way -v
 
+          
+      - name: test deMux2way
+        run: |
+          pytest -k test_demux2way
+
+
       - name: test Or8way
         run: |
           pytest -k test_or8way 

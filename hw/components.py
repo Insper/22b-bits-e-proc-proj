@@ -88,11 +88,10 @@ def mux2way(q, a, b, sel):
     Mux entre a e b, sel é o seletor
     """
     foo = Signal(intbv(0))
-
     @always_comb
     def comb():
-        q.next = foo
-
+        q.next = a if sel == 0 else b
+        
     return comb
 
 
@@ -109,10 +108,16 @@ def mux4way(q, a, b, c, d, sel):
     Mux entre a, b, c, d sel é o seletor
     """
     foo = Signal(intbv(0))
-
     @always_comb
     def comb():
-        q.next = foo
+        if sel == 0:
+            q.next = a
+        elif sel == 1:
+            q.next = b
+        elif sel == 2:
+            q.next = c
+        else:
+            q.next = d
 
     return comb
 
@@ -122,13 +127,26 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
     """
     Mux de 8 entradas, simular aos anteriores.
     """
-
     foo = Signal(intbv(0))
-
     @always_comb
     def comb():
-        q.next = foo
-
+        if sel == 0:
+            q.next = a
+        elif sel == 1:
+            q.next = b
+        elif sel == 2:
+            q.next = c
+        elif sel == 3:
+            q.next = d
+        elif sel == 4:
+            q.next = e
+        elif sel == 5:
+            q.next = f
+        elif sel == 6:
+            q.next = g
+        else:
+            q.next = h
+            
     return comb
 
 

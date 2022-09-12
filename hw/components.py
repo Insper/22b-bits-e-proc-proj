@@ -84,7 +84,7 @@ def mux2way(q, a, b, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a if sel == 0 else b
 
     return comb
 

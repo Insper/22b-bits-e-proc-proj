@@ -16,6 +16,8 @@ def and16(a, b, q):
 
     @always_comb
     def comb():
+
+        
         q.next = a and b
 
     return comb

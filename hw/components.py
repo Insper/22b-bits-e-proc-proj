@@ -266,8 +266,8 @@ def bin2bcd(b, bcd1, bcd0):
 
     @always_comb
     def comb():
-        bcd1.next = foo
-        bcd0.next = foo
+        bcd1.next = b[4:]
+        bcd0.next = b[:4]
 
     return comb
 

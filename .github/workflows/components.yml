@@ -67,4 +67,8 @@ jobs:
         run: |
           pytest hw/test_components.py -k test_deMux4way
 
+      - name: test bin2bcd
+        run: |
+          pytest hw/test_components.py -k bin2bcd
+
 

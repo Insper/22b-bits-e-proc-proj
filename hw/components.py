@@ -184,7 +184,29 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        if sel == 11:
+            q0.next = 0
+            q1.next = 0
+            q2.next = 0
+            q3.next = a
+            
+        if sel == 10:
+            q0.next = 0
+            q1.next = 0
+            q2.next = a
+            q3.next = 0
+
+        if sel == 00:
+            q0.next = a
+            q1.next = 0
+            q2.next = 0
+            q3.next = 0
+        
+        else:
+            q0.next = 0
+            q1.next = a
+            q2.next = 0
+            q3.next = 0
 
     return comb
 

@@ -240,6 +240,11 @@ def bin2hex(hex0, sw):
 
     return comb
 
+DIGIT1 = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 
+6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9)
+DIGIT0 = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 
+3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
 
 @block
 def bin2bcd(b, bcd1, bcd0):
@@ -253,32 +258,19 @@ def bin2bcd(b, bcd1, bcd0):
     BCD0 = 2
     """
     
+    
+    # foo = Signal(intbv(0)[4:])
 
-    foo = Signal(intbv(0)[4:])
+
+    
 
     @always_comb
     def comb():
-
+       
+     
         
-        contador = 0
-        decimal = 0
-        for i in range(7,0,-1) :
-            decimal += (2**contador)*int(b[i])
-            contador += 1
-        if len(str(decimal))<2 :
-            
-            bcd1.next = 0
-            bcd0.next = decimal
-            
-        else :
-            
-            bcd1.next = int(str(decimal)[0])
-            bcd0.next = int(str(decimal)[1])
-            
-        
-
-
-
+        bcd0.next = DIGIT0[int(b)]
+        bcd1.next = DIGIT1[int(b)]
 
 
     return comb

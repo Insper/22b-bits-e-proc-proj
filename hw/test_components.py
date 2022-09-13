@@ -220,18 +220,14 @@ def test_bin2bcd():
 
             b.next = i
         
-            if b > 10:
 
-                yield delay(1)
-                assert bcd1 == int(str(b)[0])
-                assert bcd0 == int(str(b)[1])
-                
-            else :
-
-                yield delay(1)
-                assert bcd1 == 0
-                assert bcd0 == b
-                
+        
+        yield delay(1)
+        assert bcd1 == int(str(int(b))[0])
+        assert bcd0 == int(str(int(b))[1])
+        
+    
+            
 
     sim = Simulation(ic1, stimulus)
     sim.run()

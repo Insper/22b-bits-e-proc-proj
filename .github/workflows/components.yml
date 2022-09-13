@@ -29,6 +29,10 @@ jobs:
 
       # ------------- Tests ----------------
 
+      - name: test bin2bcd
+        run: |
+          pytest hw/test_components.py -k test_bin2bcd
+
       - name: test demux8way
         run: |
           pytest hw/test_components.py -k test_deMux8way
@@ -74,3 +78,4 @@ jobs:
       # - name: test bin2bcd
       #   run: |
       #     pytest -k test_bin2bcd
+

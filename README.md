@@ -1,7 +1,7 @@
 # bits-e-proc-GrupoEmbasbacado
 Nome-Grupo: "GrupoEmbasbacado"
 
-Grupo:
+Grupo: <br>
   name: Eduardo Mendes Vaz
   git-username: EduardoMVAz
   blackboard-username: eduardov1

@@ -15,13 +15,10 @@ def toplevel(LEDR, SW, KEY, hex0, hex1, HEX2, HEX3, HEX4, HEX5, CLOCK_50, RESET_
     bc1 = Signal(intbv(0)[4:])
 
     ic1 = bin2bcd(SW, bc1, bc0)
-<<<<<<< HEAD
     ihex1 = bin2hex(hex1, bc1)
     ihex0 = bin2hex(hex0, bc0)
-=======
-    ihex1 = bin2hex(hex0, bc1)
-    ihex0 = bin2hex(hex1, bc0)
->>>>>>> 3eff48bb24ae0f249ba3357d452073d44f3bab7a
+    #ihex1 = bin2hex(hex0, bc1)
+    #ihex0 = bin2hex(hex1, bc0)
 
     # ---------------------------------------- #
     @always_comb

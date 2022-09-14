@@ -212,7 +212,15 @@ def test_bin2bcd():
 
     @instance
     def stimulus():
-        yield delay(1)
+        for i in range(100):
+            yield delay(1)
+            b.next = i
+            if b < 10:
+                assert bc0 == 0
+                assert bc1 == b
+            else:
+                assert bc0 == int(str(int(b))[0])
+                assert bc1 == int(str(int(b))[1])
 
     sim = Simulation(ic1, stimulus)
     sim.run()

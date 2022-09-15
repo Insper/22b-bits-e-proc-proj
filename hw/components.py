@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from myhdl import *
-import vetores
+from hw import vetores.py
 
 @block
 def and16(a, b, q):

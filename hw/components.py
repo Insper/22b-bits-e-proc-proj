@@ -263,11 +263,12 @@ def bin2bcd(b, bcd1, bcd0):
     """
 
     foo = Signal(intbv(0)[4:])
-
+    tens = [num//10 for num in range(100)]
+    ones = [num%10 for num in range(100)]
     @always_comb
     def comb():
-        bcd1.next = b[4:]
-        bcd0.next = b[:4]
+        bcd1.next = tens[b]
+        bcd0.next = ones[b]
 
     return comb
 

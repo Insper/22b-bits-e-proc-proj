@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from myhdl import *
-
+import vetores
 
 @block
 def and16(a, b, q):
@@ -243,7 +243,6 @@ def bin2hex(hex0, sw):
     """
     importar do lab!
     """
-    foo = Signal(intbv(0))
     
     @always_comb
     def comb():
@@ -295,8 +294,10 @@ def bin2bcd(b, bcd1, bcd0):
     """
 
     foo = Signal(intbv(0)[4:])
-    tens = [num//10 for num in range(100)]
-    ones = [num%10 for num in range(100)]
+
+    tens = vetores.tens 
+    ones = vetores.ones
+
     @always_comb
     def comb():
         bcd1.next = tens[b]

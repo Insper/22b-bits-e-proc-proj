@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from myhdl import *
-from hw import vetores.py
 
 @block
 def and16(a, b, q):
@@ -295,8 +294,8 @@ def bin2bcd(b, bcd1, bcd0):
 
     foo = Signal(intbv(0)[4:])
 
-    tens = vetores.tens 
-    ones = vetores.ones
+    tens = tuple(num//10 for num in range(100))
+    ones = tuple(num%10 for num in range(100))
 
     @always_comb
     def comb():

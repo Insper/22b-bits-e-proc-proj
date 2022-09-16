@@ -35,8 +35,10 @@ def ula(x, y, c, zr, ng, saida, width=16):
 def inversor(z, a, y):
     @always_comb
     def comb():
-        pass
-
+        if z == 0:
+            a.next = y
+        else:
+            a.next = ~y
     return instances()
 
 

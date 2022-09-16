@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test bin2bcd
+      - name: test comparador
         run: |
-          pytest hw/test_components.py -k test_bin2bcd
+          pytest hw/test_components.py -k test_comparador

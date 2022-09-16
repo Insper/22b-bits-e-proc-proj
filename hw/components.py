@@ -157,8 +157,13 @@ def deMux2way(a, q0, q1, sel):
 
     @always_comb
     def comb():
-        q0.next,q1.next = a if sel==0 else 0, a if sel==1 else 0
-
+        if sel == 1:
+            q1.next = a
+            q0.next = 0
+        else:
+            q0.next = a
+            q1.next = 0 
+        
     return comb
 
 
@@ -174,8 +179,18 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next,q1.next,q2.next,q3.next = a if sel == 0 else 0,a if sel == 1 else 0,a if sel == 2 else 0, a if sel == 3 else 0
-
+        q0.next = 0
+        q1.next = 0 
+        q2.next = 0
+        q3.next = 0
+        if sel == 0:
+            q0.next = a
+        if sel == 1:
+            q1.next = a
+        if sel == 2:
+            q2.next = a
+        if sel == 3: 
+            q3.next = a
     return comb
 
 
@@ -189,8 +204,30 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 
     @always_comb
     def comb():
-        q0.next,q1.next,q2.next,q3.next,q4.next,q5.next,q6.next,q7.next = a if sel == 0 else 0,a if sel == 1 else 0,a if sel == 2 else 0, a if sel == 3 else 0, a if sel == 4 else 0, a if sel == 5 else 0, a if sel == 6 else 0, a if sel == 7 else 0
-
+        q0.next = 0
+        q1.next = 0 
+        q2.next = 0
+        q3.next = 0
+        q4.next = 0
+        q5.next = 0
+        q6.next = 0
+        q7.next = 0
+        if sel == 0:
+            q0.next = a
+        if sel == 1:
+            q1.next = a
+        if sel == 2:
+            q2.next = a
+        if sel == 3: 
+            q3.next = a
+        if sel == 4:
+            q4.next = a
+        if sel == 5:
+            q5.next = a
+        if sel == 6:
+            q6.next = a
+        if sel == 7:
+            q7.next = a
     return comb
 
 

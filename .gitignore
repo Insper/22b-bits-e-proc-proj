@@ -8,3 +8,8 @@ htmlcov
 .direnv/
 *.ini
 /env
+<<<<<<< HEAD
+=======
+env/
+env
+>>>>>>> c3c7d97fdc0efaaf2ded636ddf3d6ce400120b8a

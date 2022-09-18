@@ -36,8 +36,11 @@ def inversor(z, a, y):
     @always_comb
     def comb():
         if z == 1:
-            y.next = ~a 
+
+            y.next = ~a
+    
         if z ==0:
+
             y.next = a
 
     return instances()
@@ -69,8 +72,10 @@ def zerador(z, a, y):
     def comb():
         if z == 1:
             y.next = 0
+
         elif z == 0:
             y.next = a
+
 
     return instances()
 
@@ -82,16 +87,21 @@ def add(a, b, q):
 
     @always_comb
     def comb():
+
         q.next = a + b
+
 
     return instances()
 
 
 @block
-def inc(a, q):
+def inc(a, q1):
+ 
     @always_comb
     def comb():
-        pass
+
+
+        q1.next = a + 1
 
     return instances()
 
@@ -157,6 +167,11 @@ def addcla16(a, b, q):
 
 @block
 def ula_new(x, y, c, zr, ng, sr, sf, bcd, saida, width=16):
+
+    
+
+
+
     pass
 
 

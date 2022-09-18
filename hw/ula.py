@@ -4,6 +4,27 @@ from myhdl import *
 
 
 @block
+def mux2way(q, a, b, sel):
+    """
+    q: 16 bits
+    a: 16 bits
+    b: 16 bits
+    sel: 2 bits
+
+    Mux entre a e b, sel é o seletor
+    """
+    foo = Signal(intbv(0))
+
+    @always_comb
+    def comb():
+        if sel == 0:
+            q.next = a 
+        elif sel == 1:
+            q.next = b
+    return comb
+
+
+@block
 def ula(x, y, c, zr, ng, saida, width=16):
 
     zx_out = Signal(intbv(0)[width:])
@@ -14,6 +35,8 @@ def ula(x, y, c, zr, ng, saida, width=16):
     add_out = Signal(intbv(0)[width:])
     mux_out = Signal(intbv(0)[width:])
     no_out = Signal(intbv(0)[width:])
+    comp_zr_out = Signal(bool(0))
+    comp_ng_out = Signal(bool(0))
 
     c_zx = c(5)
     c_nx = c(4)
@@ -22,8 +45,24 @@ def ula(x, y, c, zr, ng, saida, width=16):
     c_f = c(1)
     c_no = c(0)
 
+    zerador(c_zx,x,zx_out)
+    zerador(c_zy,y,zy_out)
+    inversor(c_nx,zx_out,nx_out)
+    inversor(c_ny,zy_out,ny_out)
+    and_out = ny_out and nx_out
+    add(nx_out,ny_out,add_out)
+    mux2way(mux_out,and_out,add_out,c_f)
+    inversor(c_no,mux_out,no_out)
+
+    comparador(no_out,comp_zr_out,comp_ng_out,width)
+
     @always_comb
     def comb():
+
+        saida.next = no_out
+        zr.next = comp_zr_out
+        ng.next = comp_ng_out
+
         pass
 
     return instances()
@@ -36,9 +75,9 @@ def inversor(z, a, y):
     @always_comb
     def comb():
         if z == 0:
-            a.next = y
+            y.next = a
         else:
-            a.next = ~y
+            y.next = ~a
     return instances()
 
 
@@ -63,7 +102,10 @@ def comparador(a, zr, ng, width):
 def zerador(z, a, y):
     @always_comb
     def comb():
-        pass
+        if z == 0:
+            y.next = a
+        else:
+            y.next = 0
 
     return instances()
 
@@ -72,7 +114,8 @@ def zerador(z, a, y):
 def add(a, b, q):
     @always_comb
     def comb():
-        pass
+        sum = a + b
+        q.next = sum
 
     return instances()
 
@@ -81,7 +124,7 @@ def add(a, b, q):
 def inc(a, q):
     @always_comb
     def comb():
-        pass
+        q.next = a+1
 
     return instances()
 

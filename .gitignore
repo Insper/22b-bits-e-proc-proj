@@ -9,3 +9,4 @@ htmlcov
 *.ini
 env
 .env
+ambiente_virtual

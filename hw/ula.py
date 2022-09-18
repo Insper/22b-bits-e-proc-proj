@@ -35,8 +35,10 @@ def ula(x, y, c, zr, ng, saida, width=16):
 def inversor(z, a, y):
     @always_comb
     def comb():
-        pass
-
+        if z == 0:
+            a.next = y
+        else:
+            a.next = ~y
     return instances()
 
 
@@ -45,8 +47,15 @@ def comparador(a, zr, ng, width):
     # width insica o tamanho do vetor a
     @always_comb
     def comb():
-        pass
+        if(a == 0):
+            zr.next = 1
+        else:
+            zr.next = 0
 
+        if (a[0] == 1):
+            ng.next = 1
+        else:
+            ng.next = 0
     return instances()
 
 

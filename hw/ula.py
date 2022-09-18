@@ -35,7 +35,10 @@ def ula(x, y, c, zr, ng, saida, width=16):
 def inversor(z, a, y):
     @always_comb
     def comb():
-        pass
+        if z == 1:
+            y.next = ~a
+        elif z == 0:
+            y.next = a
 
     return instances()
 
@@ -54,7 +57,12 @@ def comparador(a, zr, ng, width):
 def zerador(z, a, y):
     @always_comb
     def comb():
-        pass
+        if z == 1:
+            y.next = 0
+        if z == 0:
+            y.next = a
+        
+        
 
     return instances()
 
@@ -63,16 +71,21 @@ def zerador(z, a, y):
 def add(a, b, q):
     @always_comb
     def comb():
-        pass
+
+        q.next = a + b
+        
 
     return instances()
 
 
 @block
-def inc(a, q):
+def inc(a, q1):
+ 
     @always_comb
     def comb():
-        pass
+
+
+        q1.next = a + 1
 
     return instances()
 
@@ -138,6 +151,11 @@ def addcla16(a, b, q):
 
 @block
 def ula_new(x, y, c, zr, ng, sr, sf, bcd, saida, width=16):
+
+    
+
+
+
     pass
 
 

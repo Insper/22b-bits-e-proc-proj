@@ -63,16 +63,17 @@ def zerador(z, a, y):
 def add(a, b, q):
     @always_comb
     def comb():
-        pass
+        q.next = a + b
 
     return instances()
 
 
 @block
 def inc(a, q):
+    resultado = q
     @always_comb
     def comb():
-        pass
+        q.next = add(a,1,resultado)
 
     return instances()
 

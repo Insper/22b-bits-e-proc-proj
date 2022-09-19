@@ -51,9 +51,6 @@ def ula(x, y, c, zr, ng, saida, width=16):
         print(bin(no_out, 16))
         print(bin(comp_zr_out, 1))
         print(bin(comp_ng_out, 1))
-
-
-
     return instances()
 
 

@@ -59,8 +59,11 @@ def inversor(z, a, y):
     @always_comb
     def comb():
         if z == 1:
+
             y.next = ~a
-        elif z == 0:
+    
+        if z ==0:
+
             y.next = a
 
     return instances()
@@ -69,11 +72,11 @@ def inversor(z, a, y):
 @block
 def comparador(a, zr, ng, width):
     # width insica o tamanho do vetor a
+    
+
     @always_comb
     def comb():
-        print(bin(a, 16))
         if a[width-1] == 0:
-            ng.next = 0
         else:
             ng.next = 1
 
@@ -81,7 +84,6 @@ def comparador(a, zr, ng, width):
             zr.next = 1
         else:
             zr.next = 0
-    
 
     return instances()
 
@@ -92,21 +94,24 @@ def zerador(z, a, y):
     def comb():
         if z == 1:
             y.next = 0
-        if z == 0:
+
+        elif z == 0:
             y.next = a
-        
-        
+
 
     return instances()
 
 
 @block
 def add(a, b, q):
+
+
+
     @always_comb
     def comb():
 
         q.next = a + b
-        
+
 
     return instances()
 

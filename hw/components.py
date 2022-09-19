@@ -48,7 +48,8 @@ def orNway(a, q):
 
     @always_comb
     def comb():
-        q.next = a[0] or a[1]
+        q.next = a[0] or a[1] or a[2] or a[3] or a[4] or a[5] or a[6] or a[7] or a[
+            8] or a[9] or a[10] or a[11] or a[12] or a[13] or a[14] or a[15]
 
     return comb
 
@@ -91,7 +92,7 @@ def mux2way(q, a, b, sel):
 
     @always_comb
     def comb():
-        entradas = [a,b]
+        entradas = [a, b]
         q.next = entradas[sel]
 
     return comb
@@ -113,21 +114,18 @@ def mux4way(q, a, b, c, d, sel):
 
     @always_comb
     def comb():
-        sel2= str(sel)
-        print(sel2)
-        if sel2 == "0":
+
+        if sel == 0:
             q.next = a
-        
-        if sel2 == "1":
+
+        if sel == 1:
             q.next = b
-        
-        if sel2 == "2":
+
+        if sel == 2:
             q.next = c
-        
-        if sel2 == "3":
+
+        if sel == 3:
             q.next = d
-       
-        
 
     return comb
 
@@ -142,8 +140,8 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        
-        entradas = [a,b,c,d,e,f,g,h]
+
+        entradas = [a, b, c, d, e, f, g, h]
         q.next = entradas[sel]
         # q.next = foo
 
@@ -168,11 +166,11 @@ def deMux2way(a, q0, q1, sel):
 
     @always_comb
     def comb():
-        lista_entradas = [q0,q1]
+        lista_entradas = [q0, q1]
         for num in range(0, len(lista_entradas)):
             if num == sel:
                 lista_entradas[num].next = a
-            else: 
+            else:
                 lista_entradas[num].next = 0
 
     return comb
@@ -210,15 +208,14 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 
     foo = Signal(intbv(0))
 
-
     @always_comb
     def comb():
 
-        saidas = [q0,q1,q2,q3,q4,q5,q6,q7]
+        saidas = [q0, q1, q2, q3, q4, q5, q6, q7]
         for i in range(7):
             if sel == i:
                 saidas[i].next = a
-            else :
+            else:
                 saidas[i].next = 0
 
     return comb
@@ -265,14 +262,13 @@ def bin2hex(hex0, sw):
         else:
             hex0.next = "1000000"
 
-
     return instances()
 
 
-DIGIT1 = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 
-6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9)
-DIGIT0 = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 
-3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+DIGIT1 = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6,
+          6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9)
+DIGIT0 = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2,
+          3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
 
 @block
@@ -286,28 +282,18 @@ def bin2bcd(b, bcd1, bcd0):
     BCD1 = 8
     BCD0 = 2
     """
-    
-    
+
     # foo = Signal(intbv(0)[4:])
-
-
-    
 
     @always_comb
     def comb():
-       
-     
-        
+
         bcd0.next = DIGIT0[int(b)]
         bcd1.next = DIGIT1[int(b)]
 
-
     return comb
-
-
 
 
 # -----------------------------#
 # Conceito A
 # -----------------------------#
-

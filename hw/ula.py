@@ -4,25 +4,57 @@ from myhdl import *
 
 
 @block
-def mux2way(q, a, b, sel):
-    """
-    q: 16 bits
-    a: 16 bits
-    b: 16 bits
-    sel: 2 bits
+def ula(x, y, c, zr, ng, saida, width=16):
 
-    Mux entre a e b, sel é o seletor
-    """
-    foo = Signal(intbv(0))
+    zx_out = Signal(modbv(0)[width:])
+    nx_out = Signal(modbv(0)[width:])
+    zy_out = Signal(modbv(0)[width:])
+    ny_out = Signal(modbv(0)[width:])
+    and_out = Signal(modbv(0)[width:])
+    add_out = Signal(modbv(0)[width:])
+    mux_out = Signal(modbv(0)[width:])
+    no_out = Signal(modbv(0)[width:])
+    comp_zr_out = Signal(modbv(0)[width:])
+    comp_ng_out = Signal(modbv(0)[width:])
+
+    c_zx = c(5)
+    c_nx = c(4)
+    c_zy = c(3)
+    c_ny = c(2)
+    c_f = c(1)
+    c_no = c(0)
+
+    z1 = zerador(c_zx,x,zx_out)
+    z2 = zerador(c_zy,y,zy_out)
+    n1 = inversor(c_nx,zx_out,nx_out)
+    n2 = inversor(c_ny,zy_out,ny_out)
+
+    a2 = add(ny_out,nx_out,add_out)
+    # m = mux2way(mux_out,and_out,add_out,c_f)
+    i = inversor(c_no,mux_out, no_out)
+
+    c = comparador(no_out,comp_zr_out,comp_ng_out,width)
 
     @always_comb
     def comb():
-        if sel == 0:
-            q.next = a 
-        elif sel == 1:
-            q.next = b
-    return comb
 
+
+        and_out = ny_out & nx_out
+        if int(c_f) == 0:
+            mux_out.next = (ny_out & nx_out)
+        else:
+            mux_out.next = add_out
+
+        saida.next = no_out
+        zr.next = comp_zr_out
+        ng.next = comp_ng_out
+        print(bin(no_out, 16))
+        print(bin(comp_zr_out, 1))
+        print(bin(comp_ng_out, 1))
+
+
+
+    return instances()
 
 
 # -z faz complemento de dois
@@ -81,61 +113,6 @@ def inc(a, q):
     @always_comb
     def comb():
         q.next = a+1
-
-    return instances()
-
-
-
-@block
-def ula(x, y, c, zr, ng, saida, width=16):
-
-    zx_out = Signal(modbv(0)[width:])
-    nx_out = Signal(modbv(0)[width:])
-    zy_out = Signal(modbv(0)[width:])
-    ny_out = Signal(modbv(0)[width:])
-    and_out = Signal(modbv(0)[width:])
-    add_out = Signal(modbv(0)[width:])
-    mux_out = Signal(modbv(0)[width:])
-    no_out = Signal(modbv(0)[width:])
-    comp_zr_out = Signal(modbv(0)[width:])
-    comp_ng_out = Signal(modbv(0)[width:])
-
-    c_zx = c(5)
-    c_nx = c(4)
-    c_zy = c(3)
-    c_ny = c(2)
-    c_f = c(1)
-    c_no = c(0)
-
-    z1 = zerador(c_zx,x,zx_out)
-    z2 = zerador(c_zy,y,zy_out)
-    n1 = inversor(c_nx,zx_out,nx_out)
-    n2 = inversor(c_ny,zy_out,ny_out)
-
-    a2 = add(ny_out,nx_out,add_out)
-    # m = mux2way(mux_out,and_out,add_out,c_f)
-    i = inversor(c_no,mux_out, no_out)
-
-    c = comparador(no_out,comp_zr_out,comp_ng_out,width)
-
-    @always_comb
-    def comb():
-
-
-        and_out = ny_out & nx_out
-        if int(c_f) == 0:
-            mux_out.next = (ny_out & nx_out)
-        else:
-            mux_out.next = add_out
-
-        saida.next = no_out
-        zr.next = comp_zr_out
-        ng.next = comp_ng_out
-        print(bin(no_out, 16))
-        print(bin(comp_zr_out, 1))
-        print(bin(comp_ng_out, 1))
-
-
 
     return instances()
 

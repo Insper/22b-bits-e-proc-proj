@@ -77,6 +77,6 @@ jobs:
 
       - name: test inc
         run: |
-        pytest hw/ula.py -k test_inc
+        pytest hw/test_ula.py -k test_inc
 
 

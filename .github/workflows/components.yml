@@ -75,3 +75,7 @@ jobs:
         run: |
           pytest hw/test_components.py
 
+      - name: test inc
+        run: |
+          pytest hw/test_ula.py -k test_inc
+

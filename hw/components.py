@@ -77,7 +77,7 @@ def mux2way(q, a, b, sel):
     q: 16 bits
     a: 16 bits
     b: 16 bits
-    sel: 2 bits
+    sel: 1 bits
     Mux entre a e b, sel é o seletor
     """
     foo = Signal(intbv(0))

@@ -63,7 +63,7 @@ def zerador(z, a, y):
 def add(a, b, q):
     @always_comb
     def comb():
-        q.next = a and b
+        q.next = a + b
     return instances()
 
 

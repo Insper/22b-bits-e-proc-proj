@@ -89,10 +89,9 @@ def zerador(z, a, y):
     @always_comb
     def comb():
         if z == 0:
-            y.next = a
+            y.next = a 
         else:
-            y.next = 0
-
+            y.next = Signal(intbv(0)[16:])
     return instances()
 
 
@@ -108,8 +107,9 @@ def add(a, b, q):
 @block
 def inc(a, q):
     @always_comb
-    def comb():
-        q.next = a+1
+    def comb(): 
+
+        q.next = a + 1
 
     return instances()
 

@@ -74,4 +74,9 @@ jobs:
       - name: Combinacional
         run: |
         pytest hw/test_components.py
+      
+      - name: test add
+        run: |
+        pytest hw/ula.py -k test_add
+
 

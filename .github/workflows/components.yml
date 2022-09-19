@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test inc
+      - name: test zerador
         run: |
-          pytest hw/test_ula.py -k test_inc
+          pytest hw/test_ula.py -k test_zerador

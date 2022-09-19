@@ -4,7 +4,6 @@ from myhdl import *
 from .components import *
 @block
 def ula(x, y, c, zr, ng, saida, width=16):
-
     zx_out = Signal(modbv(0)[width:])
     nx_out = Signal(modbv(0)[width:])
     zy_out = Signal(modbv(0)[width:])
@@ -13,6 +12,7 @@ def ula(x, y, c, zr, ng, saida, width=16):
     add_out = Signal(modbv(0)[width:])
     mux_out = Signal(modbv(0)[width:])
     no_out = Signal(modbv(0)[width:])
+
     c_zx = c(5)
     c_nx = c(4)
     c_zy = c(3)
@@ -33,14 +33,6 @@ def ula(x, y, c, zr, ng, saida, width=16):
 
     @always_comb
     def comb():
-        print('------------')
-        print(bin(x, 16))
-        print(bin(y, 16))
-
-        print(bin(nx_out, 16))
-        print(bin(ny_out, 16))
-        print(bin(nx_out + ny_out, 16))
-
         and_out.next = nx_out & ny_out
         add_out.next = nx_out + ny_out
         saida.next = no_out

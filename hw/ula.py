@@ -79,6 +79,7 @@ def add(a, b, q):
 
 @block
 def inc(a, q):
+    resultado = q
     @always_comb
     def comb():
         q.next = a + 1

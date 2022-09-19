@@ -29,7 +29,7 @@ def ula(x, y, c, zr, ng, saida, width=16):
     i1 = inversor(c_nx, zx_out, nx_out)
     i2 = inversor(c_ny, zy_out, ny_out)
     add1 = add(nx_out, ny_out, add_out)
-    
+
     i3 = inversor(c_no, mux_out, no_out)
     c3 = comparador(no_out, zr_out, ng_out, width)
 
@@ -47,7 +47,6 @@ def ula(x, y, c, zr, ng, saida, width=16):
         #print(bin(no_out, 16))
         #print(bin(ng_out, 1))
 
-
     return instances()
 
 
@@ -59,10 +58,8 @@ def inversor(z, a, y):
     @always_comb
     def comb():
         if z == 1:
-
             y.next = ~a
-    
-        if z ==0:
+        if z == 0:
 
             y.next = a
 
@@ -72,11 +69,11 @@ def inversor(z, a, y):
 @block
 def comparador(a, zr, ng, width):
     # width insica o tamanho do vetor a
-    
 
     @always_comb
     def comb():
         if a[width-1] == 0:
+            ng.next = 0
         else:
             ng.next = 1
 
@@ -98,20 +95,16 @@ def zerador(z, a, y):
         elif z == 0:
             y.next = a
 
-
     return instances()
 
 
 @block
 def add(a, b, q):
 
-
-
     @always_comb
     def comb():
 
         q.next = a + b
-
 
     return instances()
 
@@ -120,7 +113,6 @@ def add(a, b, q):
 def inc(a, q):
     @always_comb
     def comb():
-
 
         q.next = a+1
 
@@ -189,13 +181,8 @@ def addcla16(a, b, q):
 @block
 def ula_new(x, y, c, zr, ng, sr, sf, bcd, saida, width=16):
 
-
-    if zr[0][0] == 1 :
+    if zr[0][0] == 1:
         x.next == 0
-    
-
-
-
 
     pass
 

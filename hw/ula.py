@@ -45,7 +45,14 @@ def comparador(a, zr, ng, width):
     # width insica o tamanho do vetor a
     @always_comb
     def comb():
-        pass
+        if a == 0:
+            zr.next = 1
+        else:
+            zr.next = 0
+        if a < 0:
+            ng.next = 1
+        else:
+            ng.next = 0
 
     return instances()
 

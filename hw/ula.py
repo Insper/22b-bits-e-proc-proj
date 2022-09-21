@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from myhdl import *
-from components import *
+from .components import *
 @block
 def ula(x, y, c, zr, ng, saida, width=16):
     zx_out = Signal(modbv(0)[width:])

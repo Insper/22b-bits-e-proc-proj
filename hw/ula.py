@@ -26,15 +26,18 @@ def ula(x, y, c, zr, ng, saida, width=16):
     z2 = zerador(c_zy, zy_out, y)
     i2 = inversor(c_ny, zy_out, ny_out)
    
-    m1 = mux2way(mux_out, and_out, add_out, c_f)
+    #m1 = mux2way(mux_out, and_out, add_out, c_f)
     i3 = inversor(c_no, mux_out, no_out)
    
     c1 = comparador(no_out, zr, ng, width)
 
     @always_comb
     def comb():
-        and_out.next = nx_out & ny_out
-        add_out.next = nx_out + ny_out
+        if c_f: 
+            mux_out.next = nx_out & ny_out
+        else:
+             mux_out.next = nx_out + ny_out
+
         saida.next = no_out
     return instances()
 

@@ -86,6 +86,11 @@ jobs:
       - name: test inversor
         run: |
           pytest hw/test_ula.py -k test_inversor
+      
+      - name: test addcla4
+        run: |
+          pytest hw/test_ula.py -k test_addcla4
+
 
 
 

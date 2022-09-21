@@ -137,8 +137,7 @@ def fullAdder(a, b, c, soma, carry):
 def addcla4(a, b, q):
     @always_comb
     def comb():
-        pass
-
+        q.next = a+b
     return instances()
 
 

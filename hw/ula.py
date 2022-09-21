@@ -48,9 +48,6 @@ def ula(x, y, c, zr, ng, saida, width=16):
         saida.next = no_out
         zr.next = comp_zr_out
         ng.next = comp_ng_out
-        print(bin(no_out, 16))
-        print(bin(comp_zr_out, 1))
-        print(bin(comp_ng_out, 1))
     return instances()
 
 
@@ -91,7 +88,7 @@ def zerador(z, a, y):
         if z == 0:
             y.next = a 
         else:
-            y.next = Signal(intbv(0)[16:])
+            y.next = 0
     return instances()
 
 

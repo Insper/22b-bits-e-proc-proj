@@ -134,7 +134,6 @@ def fullAdder(a, b, c, soma, carry):
 
 
 @block
-@block
 def addcla4(a, b, q):
     @always_comb
     def comb():

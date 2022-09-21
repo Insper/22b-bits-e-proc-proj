@@ -162,11 +162,7 @@ def test_add():
         for i in range(256):
             a.next, b.next = [randrange(2**15 - 1) for i in range(2)]
             yield delay(1)
-            if q != a + b:
-                print("erro")
-                print("%s %s %s" % (a, b, q))
-                print("%s %s %s" % (bin(a, 16), bin(b, 16), bin(q, 16)))
-                print("%s" % (bin(a + b, 16)))
-                break
+            assert q == a + b
 
-    return add16_1, stimulus
+    sim = Simulation(add16_1, stimulus)
+    sim.run()

@@ -87,7 +87,7 @@ jobs:
         run: |
           pytest hw/test_ula.py -k test_inversor
       
-      - name: test test addcla4
+      - name: test addcla4
         run: |
           pytest hw/test_ula.py -k test_addcla4
 

@@ -17,12 +17,12 @@ def ula(x, y, c, zr, ng, saida, width=16):
     comp_zr_out = Signal(modbv(0)[width:])
     comp_ng_out = Signal(modbv(0)[width:])
 
-    c_zx = c(0)
-    c_nx = c(1)
-    c_zy = c(2)
-    c_ny = c(3)
-    c_f = c(4)
-    c_no = c(5)
+    c_zx = c(5)
+    c_nx = c(4)
+    c_zy = c(3)
+    c_ny = c(2)
+    c_f = c(1)
+    c_no = c(0)
 
     z1 = zerador(c_zx,x,zx_out)
     z2 = zerador(c_zy,y,zy_out)

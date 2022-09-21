@@ -26,15 +26,17 @@ def toplevel(LEDR, SW, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, CLOCK_50, RESET_
     # ic1 = bin2bcd(SW, bc1, bc0)
     # ihex1 = bin2hex(HEX1, bc1)
     # ihex0 = bin2hex(HEX0, bc0)
+    saida = Signal(modbv(0)[8:])
+    x = Signal(modbv(1)[8:])
+    y = Signal(modbv(2)[8:])
 
-
-    ula_ = ula(Signal(intbv(1)[8:]), Signal(intbv(2)[8:]), SW, ledr_s[8], ledr_s[9], ledr_s[0:8], Signal(modbv(0)[8:]))
+    ula_ = ula(x, y, SW, ledrs[8], ledrs[9], saida, 8)
 
     # ---------------------------------------- #
     @always_comb
     def comb():
-        for i in range(len(ledr_s)):
-            LEDR[i].next = ledr_s[i]
+        for i in range(len(saida)):
+            LEDR[i].next = saida[i]
 
     return instances()
 

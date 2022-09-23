@@ -87,10 +87,30 @@ jobs:
               run: |
                   pytest -k test_add -v
 
-            # - name: test Somador
-            #   run: |
-            #       pytest -k test_add -v
+            - name: test Ula
+              run: |
+                  pytest -k test_ula -v
 
-            # - name: test Somador
-            #   run: |
-            #       pytest -k test_add -v
+            - name: test Zerador
+              run: |
+                  pytest -k test_zerador -v
+
+            - name: test Inversor
+              run: |
+                  pytest -k test_inversor -v
+
+            - name: test Inc
+              run: |
+                  pytest -k test_inc -v
+
+            - name: test Add
+              run: |
+                  pytest -k test_add -v
+
+            - name: test Addcla4
+              run: |
+                  pytest -k test_addcla4 -v
+
+            - name: test Addcla16
+              run: |
+                  pytest -k test_addcla16 -v

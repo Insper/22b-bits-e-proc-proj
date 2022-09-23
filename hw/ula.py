@@ -196,7 +196,7 @@ def addcla16(a, b, q):
                 q.next[i] = (newa[i] ^ newb[i]) ^ c[i]
         else:
             q.next = 0
-            
+
     return instances()
 
 

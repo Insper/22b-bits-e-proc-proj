@@ -157,19 +157,46 @@ def fullAdder(a, b, c, soma, carry):
 
 @block
 def addcla4(a, b, q):
+    # 4 bit adder with carry lookahead
+
+    newa = [a(i) for i in range(4)]
+    newb = [b(i) for i in range(4)]
+
+    j = 0
+
     @always_comb
     def comb():
-        pass
+        c = [j for i in range(5)]
+
+        for i in range(4):
+            c[i+1] = (newa[i] & newb[i]) | (newa[i] ^ newb[i]) & c[i]
+            q.next[i] = newa[i] ^ newb[i] ^ c[i]
 
     return instances()
 
 
 @block
 def addcla16(a, b, q):
+
+    newa = [a(i) for i in range(16)]
+    newb = [b(i) for i in range(16)]
+
+    j = 0
+
     @always_comb
     def comb():
-        pass
+        c = [j for i in range(17)]
 
+        for i in range(16):
+            c[i+1] = (newa[i] & newb[i]) | (newa[i] ^ newb[i]) & c[i]
+            q.next[i] = newa[i] ^ newb[i] ^ c[i]
+
+        if c[16] == 0:
+            for i in range(16):
+                q.next[i] = (newa[i] ^ newb[i]) ^ c[i]
+        else:
+            q.next = 0
+            
     return instances()
 
 

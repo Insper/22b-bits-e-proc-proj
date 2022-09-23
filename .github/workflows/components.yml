@@ -86,3 +86,11 @@ jobs:
             - name: test Somador
               run: |
                   pytest -k test_add -v
+
+            # - name: test Somador
+            #   run: |
+            #       pytest -k test_add -v
+
+            # - name: test Somador
+            #   run: |
+            #       pytest -k test_add -v

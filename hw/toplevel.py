@@ -37,6 +37,8 @@ def toplevel(LEDR, SW, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, CLOCK_50, RESET_
     def comb():
         for i in range(len(saida)):
             LEDR[i].next = saida[i]
+        LEDR[8].next = ledrs[8]
+        LEDR[9].next = ledrs[9]
 
     return instances()
 

@@ -26,7 +26,7 @@ def ula(x, y, c, zr, ng, saida, width=16):
     z2 = zerador(c_zy, zy_out, y)
     i2 = inversor(c_ny, zy_out, ny_out)
    
-    #m1 = mux2way(mux_out, and_out, add_out, c_f)
+    m1 = mux2way(mux_out, and_out, add_out, c_f)
     i3 = inversor(c_no, mux_out, no_out)
    
     c1 = comparador(no_out, zr, ng, width)
@@ -136,19 +136,45 @@ def fullAdder(a, b, c, soma, carry):
     return instances()
 
 
+
 @block
 def addcla4(a, b, q):
+
+    new_a = [a(i) for i in range(4)]
+    new_b = [b(i) for i in range(4)]
+
+    z = 0
+
     @always_comb
     def comb():
-        q.next = a+b
+        c =[z for i in range(4+1)]
+        
+        for i in range(4):
+            c[i+1] = (new_a[i] & new_b[i]) | (new_a[i] ^ new_b[i]) & c[i]
+            q.next[i] = new_a[i] ^ new_b[i] ^ c[i]
+
     return instances()
 
 
 @block
 def addcla16(a, b, q):
+    new_a = [a(i) for i in range(16)]
+    new_b = [b(i) for i in range(16)]
+
+    z = 0
+
     @always_comb
     def comb():
-        q.next = a + b
+        c =[z for i in range(16+1)]
+        
+        for i in range(16):
+            c[i+1] = (new_a[i] & new_b[i]) | ((new_a[i] ^ new_b[i]) & c[i])
+            
+        if c[16] == 0:
+            for i in range(16):
+                q.next[i] = (new_a[i] ^ new_b[i]) ^ c[i]
+        else:
+            q.next = 0
 
     return instances()
 
@@ -157,12 +183,23 @@ def addcla16(a, b, q):
 # Conceito A
 # ----------------------------------------------
 
-
 @block
 def ula_new(x, y, c, zr, ng, sr, sf, bcd, saida, width=16):
     pass
 
-
+    
 @block
 def bcdAdder(x, y, z):
-    pass
+
+    a = tuple([i for i in range(10) for j in range(1)]*10)
+    b = tuple([i for i in range(10) for j in range(10)])
+
+    @always_comb
+    def comb():
+        sum_ = x + y
+        z.next = 0 if sum_ > 99 else concat(intbv(b[int(sum_)])[4:], intbv(a[int(sum_)])[4:])
+    
+    return instances()
+
+
+

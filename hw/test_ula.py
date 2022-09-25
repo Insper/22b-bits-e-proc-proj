@@ -188,7 +188,7 @@ def test_addcla16():
     b = Signal(intbv(0))
     q = Signal(intbv(0))
 
-    addcla16_1 = addcla4(a, b, q)
+    addcla16_1 = addcla16(a, b, q)
 
     @instance
     def stimulus():
@@ -198,3 +198,29 @@ def test_addcla16():
             assert q == a + b
     sim = Simulation(addcla16_1, stimulus)
     sim.run()
+
+
+
+def test_bcdAdder():
+    a = Signal(intbv(0))
+    b = Signal(intbv(0))
+    q = Signal(intbv(0))
+
+    bcd = bcdAdder(a, b, q)
+
+    @instance
+    def stimulus():
+        for x in range(51):
+            for y in range(50):
+                a.next = x
+                b.next = y
+                yield delay(2)
+                
+                assert q == int(str(int(bin(a + b), 2))) if len(str(int(bin(a + b), 2)))  == 1 else concat(intbv(int(str(int(bin(a + b), 2))[0]))[4:], intbv(int(str(int(bin(a + b), 2))[1]))[4:])
+
+
+    sim = Simulation(bcd, stimulus)
+    sim.run()
+
+
+    

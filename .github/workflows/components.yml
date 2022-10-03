@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test binary digit
+      - name: test register8
         run: |
-          pytest hw/test_seq.py -k test_binaryDigit
+          pytest hw/test_seq.py -k test_register8

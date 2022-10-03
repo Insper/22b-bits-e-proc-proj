@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from myhdl import *
+from .components import *
 
 
 @block
@@ -57,9 +58,12 @@ def register8(i, load, output, clk, rst):
 def binaryDigit(i, load, output, clk, rst):
     q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
 
+    mux = mux2way(q, d, i, load)
+    theDff = dff(d, q, clear, presset, clk, rst)
+
     @always_comb
     def comb():
-        pass
+        output.next = d
 
     return instances()
 

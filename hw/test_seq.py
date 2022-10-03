@@ -107,7 +107,9 @@ def test_registerN():
             assert i == output
 
     sim = Simulation(dut, [stimulus, clkgen])
-    sim.run(20)
+    traceSignals(dut)
+    sim.run(200)
+    sim.quit()
 
 
 def test_register8():
@@ -133,7 +135,9 @@ def test_register8():
             assert i == output
 
     sim = Simulation(dut, [stimulus, clkgen])
+    traceSignals(dut)
     sim.run(200)
+    sim.quit()
 
 
 def test_binaryDigit():
@@ -162,8 +166,9 @@ def test_binaryDigit():
         load.next = 0
 
     sim = Simulation(dut, [stimulus, clkgen])
-    sim.run(200)
-
+    traceSignals(dut)
+    sim.run(100)
+    sim.quit()
 
 def test_dff():
     q, d, clear, presset, clk = [Signal(bool(0)) for i in range(5)]

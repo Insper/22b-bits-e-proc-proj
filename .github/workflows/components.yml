@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test ula
+      - name: test binary digit
         run: |
-          pytest hw/test_ula.py -k test_ula
+          pytest hw/test_seq.py -k test_binaryDigit

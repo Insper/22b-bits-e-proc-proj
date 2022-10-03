@@ -33,11 +33,15 @@ def pc(increment, load, i, output, width, clk, rst):
 @block
 def registerN(i, load, output, width, clk, rst):
     binaryDigitList = [None for n in range(width)]
-    outputs = [Signal(bool(0)) for n in range(width)]
+    output_n = [Signal(bool(0)) for n in range(width)]
+
+    for y in range(width):
+        binaryDigitList[i] = binaryDigit(i[y],load,output_n[i],clk,rst)
 
     @always_comb
     def comb():
-        pass
+        for n in range(width):
+            output.next[n] = output_n[n]
 
     return instances()
 

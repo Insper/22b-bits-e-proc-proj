@@ -114,3 +114,7 @@ jobs:
             - name: test Addcla16
               run: |
                   pytest -k test_addcla16 -v
+            # ---------- Projeto D ----------------
+            - name: test binaryDigit
+              run: |
+                  pytest -k test_binaryDigit -v

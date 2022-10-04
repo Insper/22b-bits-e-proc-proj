@@ -118,7 +118,11 @@ jobs:
             - name: test binaryDigit
               run: |
                   pytest -k test_binaryDigit -v
-            
+
             - name: test registerN
               run: |
                   pytest -k test_registerN -v
+
+            - name: test PC
+              run: |
+                  pytest -k test_pc -v

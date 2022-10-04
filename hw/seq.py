@@ -2,6 +2,8 @@
 
 from myhdl import *
 from .components import *
+from .ula import inc
+
 
 @block
 def ram(dout, din, addr, we, clk, rst, width, depth):
@@ -9,8 +11,8 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
     outputs = [Signal(modbv(0)[width:]) for i in range(depth)]
     registersList = [None for i in range(depth)]
 
-    for k in range (depth):
-        registersList = registerN(din,loads[k],outputs[k],width,clk,rst)
+    for k in range(depth):
+        registersList = registerN(din, loads[k], outputs[k], width, clk, rst)
 
     @always_comb
     def comb():
@@ -23,13 +25,30 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
 
 @block
 def pc(increment, load, i, output, width, clk, rst):
+    # print("Primeiro Print", increment, load, i, output, width, clk, rst)
+
     regIn = Signal(modbv(0)[width:])
     regOut = Signal(modbv(0)[width:])
     regLoad = Signal(bool(0))
 
+    incOut = Signal(modbv(0)[width:])
+    mux1out = Signal(modbv(0)[width:])
+    mux2out = Signal(modbv(0)[width:])
+
+    incrementador16 = inc(regOut, incOut)
+
+    mux_inc = mux2way(mux1out, False, incOut, increment)
+
+    mux_load = mux2way(mux2out, mux1out, i, load)
+
+    mux_reset = mux2way(regIn, mux2out, 0, rst)
+
+    register_final = registerN(regIn, regLoad, regOut, width, clk, rst)
+
     @always_comb
     def comb():
-        pass
+        regLoad.next = increment or load or rst
+        output.next = regOut
 
     return instances()
 
@@ -51,7 +70,7 @@ def registerN(i, load, output, width, clk, rst):
 
         for k in range(width):
             output.next[k] = outputs[k]
-    
+
     return instances()
 
 
@@ -70,11 +89,13 @@ def register8(i, load, output, clk, rst):
 
     return instances()
 
+
 @block
 def binaryDigit(i, load, output, clk, rst):
     q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
     mux1 = mux2way(d, q, i, load)
     dff1 = dff(q, d, clear, presset, clk, rst)
+
     @always_comb
     def comb():
         output.next = q

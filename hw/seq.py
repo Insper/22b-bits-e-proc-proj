@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-
 from myhdl import *
 from .components import *
+from .ula import *
+
 
 
 @block
@@ -22,10 +23,20 @@ def pc(increment, load, i, output, width, clk, rst):
     regIn = Signal(modbv(0)[width:])
     regOut = Signal(modbv(0)[width:])
     regLoad = Signal(bool(0))
+    incOut = Signal(modbv(0)[width:])
+    mux1_out,mux2_out = [Signal(modbv(0)[width:]) for _ in range(2)]
+    
+    
+    incre_1 = inc(regOut,incOut)
+    mx1 = mux2way(mux1_out, False, incOut, increment)
+    mx2 = mux2way(mux2_out, mux1_out, i, load)
+    mx3 = mux2way(regIn, mux2_out, False, rst)
+    reg1 = registerN(regIn,regLoad,regOut,width,clk,rst)
 
     @always_comb
     def comb():
-        pass
+        regLoad.next = rst or increment or load
+        output.next = regOut
 
     return instances()
 
@@ -33,15 +44,15 @@ def pc(increment, load, i, output, width, clk, rst):
 @block
 def registerN(i, load, output, width, clk, rst):
     binaryDigitList = [None for n in range(width)]
-    output_n = [Signal(bool(0)) for n in range(width)]
-
-    for y in range(width):
-        binaryDigitList[i] = binaryDigit(i[y],load,output_n[i],clk,rst)
-
+    outputs = [Signal(bool(0)) for n in range(width)]
+    
+    for j in range(width):
+        binaryDigitList[j] = binaryDigit(i(j),load,outputs[j],clk,rst)
     @always_comb
     def comb():
-        for n in range(width):
-            output.next[n] = output_n[n]
+        for p in range(width):
+            output.next[p] = outputs[p]
+
 
     return instances()
 
@@ -62,14 +73,11 @@ def register8(i, load, output, clk, rst):
 @block
 def binaryDigit(i, load, output, clk, rst):
     q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
-
-    mux = mux2way(q, d, i, load)
-    theDff = dff(d, q, clear, presset, clk, rst)
-
+    m = mux2way(d, q, i, load)
+    df = dff(q,d,clear,presset,clk,rst)
     @always_comb
     def comb():
-        output.next = d
-
+        output.next = q
     return instances()
 
 

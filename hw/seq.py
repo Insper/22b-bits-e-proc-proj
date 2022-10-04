@@ -34,11 +34,14 @@ def registerN(i, load, output, width, clk, rst):
     binaryDigitList = [None for n in range(width)]
     outputs = [Signal(bool(0)) for n in range(width)]
 
+    for k in range(width):
+        binaryDigitList[k] = binaryDigit(i(k), load, outputs[k], clk, rst)
+
     @always_comb
     def comb():
-        pass
 
-    return instances()
+        for k in range(width):
+            output.next[k] = outputs[k]
 
 @block
 def register8(i, load, output, clk, rst):

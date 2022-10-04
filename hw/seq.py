@@ -41,6 +41,21 @@ def registerN(i, load, output, width, clk, rst):
     return instances()
 
 @block
+def register8(i, load, output, clk, rst):
+    binaryDigitList = [None for n in range(8)]
+    output_n = [Signal(bool(0)) for n in range(8)]
+
+    for k in range(8):
+        binaryDigitList[k] = binaryDigit(i(k), load, output_n[k], clk, rst)
+
+    @always_comb
+    def comb():
+        for k in range(8):
+            output.next[k] = output_n[k]
+
+    return instances()
+
+@block
 def binaryDigit(i, load, output, clk, rst):
     q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
     mux1 = mux2way(d, q, i, load)

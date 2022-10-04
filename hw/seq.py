@@ -40,7 +40,6 @@ def registerN(i, load, output, width, clk, rst):
 
     return instances()
 
-
 @block
 def register8(i, load, output, clk, rst):
     binaryDigitList = [None for n in range(8)]
@@ -56,19 +55,14 @@ def register8(i, load, output, clk, rst):
 
     return instances()
 
-
 @block
 def binaryDigit(i, load, output, clk, rst):
-    q, d, output1, output2, clear, presset = [Signal(bool(0)) for i in range(6)]
-    mux1 = mux2way(d, i, q, load)
-    dff1 = dff(output1, i, clear, presset, clk, rst)
-    dff2 = dff(output2, d, clear, presset, clk, rst)
+    q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
+    mux1 = mux2way(d, q, i, load)
+    dff1 = dff(q, d, clear, presset, clk, rst)
     @always_comb
     def comb():
-        if load == 1:
-            output.next = output1
-        else:
-            output.next = output2
+        output.next = q
 
     return instances()
 

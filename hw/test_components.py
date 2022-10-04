@@ -31,7 +31,8 @@ def test_and16():
 def test_or8way():
     q = Signal(bool(0))
     sig = Signal(intbv(0, max=2**8 - 1))
-    dut = or8way(sig(0), sig(1), sig(2), sig(3), sig(4), sig(5), sig(6), sig(7), q)
+    dut = or8way(sig(0), sig(1), sig(2), sig(
+        3), sig(4), sig(5), sig(6), sig(7), q)
 
     @instance
     def stimulus():
@@ -183,7 +184,8 @@ def test_deMux4way():
 
 
 def test_deMux8way():
-    a, q0, q1, q2, q3, q4, q5, q6, q7, sel = [Signal(intbv(0)) for i in range(10)]
+    a, q0, q1, q2, q3, q4, q5, q6, q7, sel = [
+        Signal(intbv(0)) for i in range(10)]
     deMuxOuts = [q0, q1, q2, q3, q4, q5, q6, q7]
     deMux8way_1 = deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel)
 
@@ -204,15 +206,22 @@ def test_deMux8way():
 
 
 def test_bin2bcd():
-    bc0 = Signal(intbv(0)[4:])
-    bc1 = Signal(intbv(0)[4:])
+    bcd1 = Signal(intbv(0)[4:])
+    bcd0 = Signal(intbv(0)[4:])
     b = Signal(intbv(0)[9:])
 
-    ic1 = bin2bcd(b, bc1, bc0)
+    ic1 = bin2bcd(b, bcd1, bcd0)
 
     @instance
     def stimulus():
+
+        for i in range(100):
+
+            b.next = i
+
         yield delay(1)
+        assert bcd1 == int(str(int(b))[0])
+        assert bcd0 == int(str(int(b))[1])
 
     sim = Simulation(ic1, stimulus)
     sim.run()

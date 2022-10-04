@@ -12,11 +12,10 @@ def and16(a, b, q):
 
     and bit a bit entre a e b
     """
-    foo = Signal(0)
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a and b
 
     return comb
 
@@ -32,7 +31,7 @@ def or8way(a, b, c, d, e, f, g, h, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a or b or c or d or e or f or g or h
 
     return comb
 
@@ -49,7 +48,8 @@ def orNway(a, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a[0] or a[1] or a[2] or a[3] or a[4] or a[5] or a[6] or a[7] or a[
+            8] or a[9] or a[10] or a[11] or a[12] or a[13] or a[14] or a[15]
 
     return comb
 
@@ -72,8 +72,10 @@ def barrelShifter(a, dir, size, q):
 
     @always_comb
     def comb():
-        q.next = foo
-
+        if dir == 0:
+            q.next = a >> size
+        else:
+            q.next = a << size
     return comb
 
 
@@ -85,13 +87,13 @@ def mux2way(q, a, b, sel):
     b: 16 bits
     sel: 2 bits
 
-    Mux entre a e b, sel é o seletor
-    """
+    Mux entre a e b, sel é o seletor"""
     foo = Signal(intbv(0))
 
     @always_comb
     def comb():
-        q.next = foo
+        entradas = [a, b]
+        q.next = entradas[sel]
 
     return comb
 
@@ -112,7 +114,18 @@ def mux4way(q, a, b, c, d, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+
+        if sel == 0:
+            q.next = a
+
+        if sel == 1:
+            q.next = b
+
+        if sel == 2:
+            q.next = c
+
+        if sel == 3:
+            q.next = d
 
     return comb
 
@@ -127,7 +140,10 @@ def mux8way(q, a, b, c, d, e, f, g, h, sel):
 
     @always_comb
     def comb():
-        q.next = foo
+
+        entradas = [a, b, c, d, e, f, g, h]
+        q.next = entradas[sel]
+        # q.next = foo
 
     return comb
 
@@ -150,7 +166,12 @@ def deMux2way(a, q0, q1, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        lista_entradas = [q0, q1]
+        for num in range(0, len(lista_entradas)):
+            if num == sel:
+                lista_entradas[num].next = a
+            else:
+                lista_entradas[num].next = 0
 
     return comb
 
@@ -167,7 +188,12 @@ def deMux4way(a, q0, q1, q2, q3, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+        saidas = [q0, q1, q2, q3]
+        for index in range(0, len(saidas)):
+            if index == sel:
+                saidas[index].next = a
+            else:
+                saidas[index].next = 0
 
     return comb
 
@@ -184,7 +210,13 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 
     @always_comb
     def comb():
-        q0.next = foo
+
+        saidas = [q0, q1, q2, q3, q4, q5, q6, q7]
+        for i in range(7):
+            if sel == i:
+                saidas[i].next = a
+            else:
+                saidas[i].next = 0
 
     return comb
 
@@ -195,15 +227,48 @@ def deMux8way(a, q0, q1, q2, q3, q4, q5, q6, q7, sel):
 #
 @block
 def bin2hex(hex0, sw):
-    """
-    importar do lab!
-    """
-
     @always_comb
     def comb():
-        hex0.next[4:] = sw[4:]
+        if sw[4:0] == 0:
+            hex0.next = "1000000"
+        elif sw[4:0] == 1:
+            hex0.next = "1001111"
+        elif sw[4:0] == 2:
+            hex0.next = "0100100"
+        elif sw[4:0] == 3:
+            hex0.next = "0110000"
+        elif sw[4:0] == 4:
+            hex0.next = "0011001"
+        elif sw[4:0] == 5:
+            hex0.next = "0010010"
+        elif sw[4:0] == 6:
+            hex0.next = "0000010"
+        elif sw[4:0] == 7:
+            hex0.next = "1111000"
+        elif sw[4:0] == 8:
+            hex0.next = "0000000"
+        elif sw[4:0] == 9:
+            hex0.next = "0010000"
+        elif sw[4:0] == 10:
+            hex0.next = "0001000"
+        elif sw[4:0] == 11:
+            hex0.next = "0000011"
+        elif sw[4:0] == 12:
+            hex0.next = "1000110"
+        elif sw[4:0] == 13:
+            hex0.next = "0100001"
+        elif sw[4:0] == 14:
+            hex0.next = "0000110"
+        else:
+            hex0.next = "1000000"
 
-    return comb
+    return instances()
+
+
+DIGIT1 = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6,
+          6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9)
+DIGIT0 = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2,
+          3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
 
 @block
@@ -218,12 +283,13 @@ def bin2bcd(b, bcd1, bcd0):
     BCD0 = 2
     """
 
-    foo = Signal(intbv(0)[4:])
+    # foo = Signal(intbv(0)[4:])
 
     @always_comb
     def comb():
-        bcd1.next = foo
-        bcd0.next = foo
+
+        bcd0.next = DIGIT0[int(b)]
+        bcd1.next = DIGIT1[int(b)]
 
     return comb
 

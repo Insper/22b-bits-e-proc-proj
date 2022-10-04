@@ -4,6 +4,7 @@ from .components import *
 from .ula import *
 
 
+
 @block
 def ram(dout, din, addr, we, clk, rst, width, depth):
     loads = [Signal(bool(0)) for i in range(depth)]
@@ -55,7 +56,6 @@ def registerN(i, load, output, width, clk, rst):
 
     return instances()
 
-
 @block
 def register8(i, load, output, clk, rst):
     binaryDigitList = [None for n in range(8)]
@@ -69,7 +69,6 @@ def register8(i, load, output, clk, rst):
         for p in range(8):
             output.next[p] = output_n[p]
     return instances()
-
 
 @block
 def binaryDigit(i, load, output, clk, rst):

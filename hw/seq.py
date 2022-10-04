@@ -11,10 +11,17 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
     outputs = [Signal(modbv(0)[width:]) for i in range(depth)]
     registersList = [None for i in range(depth)]
 
+    for i in range(len(loads)):
+        registersList[i] = registerN(din, loads[i], outputs[i], width, clk, rst)
+
     @always_comb
     def comb():
-        pass
-
+        for p in range(len(loads)):
+            if p == addr:
+                loads[p].next = we
+            else:
+                loads[p].next = 0
+        dout.next = outputs[addr]
     return instances()
 
 

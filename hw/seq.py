@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from myhdl import *
+from .components import mux2way
+from .ula import inc
 
 
 @block
@@ -18,13 +20,30 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
 
 @block
 def pc(increment, load, i, output, width, clk, rst):
+    print(increment, load, i, output, width, clk, rst)
+
     regIn = Signal(modbv(0)[width:])
     regOut = Signal(modbv(0)[width:])
+
+    incOut = Signal(modbv(0)[width:])
+
     regLoad = Signal(bool(0))
+
+    mux2out = Signal(modbv(0)[width:])
+    mux1out = Signal(modbv(0)[width:])
+    regOut = Signal(modbv(0)[width:])
+
+    inc16 = inc(regOut, incOut)
+
+    mux_inc = mux2way(mux1out, False, incOut, increment)
+
+    mux_load = mux2way(mux2out, mux1out, i, load)
+
+    mux_reset = mux2way(regIn, mux2out, 0, rst)
 
     @always_comb
     def comb():
-        pass
+        regLoad.next = increment or load or rst
 
     return instances()
 

@@ -15,10 +15,11 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
 
     @always_comb
     def comb():
-        if we:
-            loads[addr].next = 1
-        else:
-            loads[addr].next = 0
+        for p in range(len(loads)):
+            if p == addr:
+                loads[p].next = we
+            else:
+                loads[p].next = 0
         dout.next = outputs[addr]
     return instances()
 

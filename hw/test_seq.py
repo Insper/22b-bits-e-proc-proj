@@ -38,6 +38,7 @@ def test_ram():
     sim = Simulation(dut, [stimulus, clkgen])
     traceSignals(dut)
     sim.run(20)
+    sim.quit()
 
 
 def test_pc():

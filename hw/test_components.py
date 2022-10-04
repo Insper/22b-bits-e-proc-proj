@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from components import *
+from .components import *
 import random
 
 random.seed(5)

@@ -30,4 +30,4 @@ jobs:
       # ------------- Tests ----------------
       - name: test pc
         run: |
-          pytest hw/test_pc.py -k test_pc
+          pytest hw/test_seq.py -k test_pc

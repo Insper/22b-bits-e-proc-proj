@@ -49,7 +49,11 @@ def registerN(i, load, output, width, clk, rst):
             output.next[k] = outputs[k]
         pass
 
+        for k in range(width):
+            output.next[k] = outputs[k]
+    
     return instances()
+
 
 @block
 def register8(i, load, output, clk, rst):

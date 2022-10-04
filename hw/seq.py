@@ -55,12 +55,18 @@ def register8(i, load, output, clk, rst):
 
 @block
 def binaryDigit(i, load, output, clk, rst):
-    q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
+    q, d, clear, presset,aux = [Signal(bool(0)) for i in range(5)]
+    df = dff(q,aux,clear,presset,clk,rst)
 
     @always_comb
     def comb():
-        pass
-
+        if load == 0:
+            aux.next = q
+        else:
+            aux.next = i
+        output.next = q
+        
+        
     return instances()
 
 

@@ -23,3 +23,6 @@ Grupo: <br>
   
   # Link do Vídeo - ULA PROJETO 2 <br>
   https://youtu.be/FFwDtIYD0vU
+  
+  # Link do Vídeo - Projeto 3 - Lógica Sequencial <br>
+  https://youtu.be/Hs6h9iG8dUY

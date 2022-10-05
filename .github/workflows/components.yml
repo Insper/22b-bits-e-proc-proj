@@ -107,6 +107,9 @@ jobs:
         run: |
           pytest hw/test_seq.py -k test_registerN
 
+      - name: test ram
+        run: |
+          pytest hw/test_seq.py -k test_ram
 
 
 

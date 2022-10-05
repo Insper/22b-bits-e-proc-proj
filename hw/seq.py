@@ -11,10 +11,17 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
     outputs = [Signal(modbv(0)[width:]) for i in range(depth)]
     registersList = [None for i in range(depth)]
 
+    for k in range(depth):
+        registersList[k] = registerN(din,loads[k],outputs[k],width,clk,rst)
+
     @always_comb
     def comb():
-        pass
-
+        for i in range(len(loads)):
+            if i == addr: # selecionando o registrador conforme o endereço
+                loads[addr].next = we 
+            else:
+                loads[addr].next = 0
+        dout.next = outputs[addr] # retornando informação registrada onde o endereço aponta
     return instances()
 
 

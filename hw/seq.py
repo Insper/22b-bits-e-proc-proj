@@ -63,7 +63,6 @@ def binaryDigit(i, load, output, clk, rst):
 
     return instances()
 
-
 @block
 def dff(q, d, clear, presset, clk, rst):
     @always_seq(clk.posedge, reset=rst)

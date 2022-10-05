@@ -94,6 +94,11 @@ jobs:
       - name: test bcdAdder
         run: |
           pytest hw/test_ula.py -k test_bcdAdder
+      
+      - name: test binaryDigit
+        run: |
+          pytest hw/test_seq.py -k test_binaryDigit
+
 
 
 

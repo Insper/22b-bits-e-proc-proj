@@ -118,6 +118,13 @@ jobs:
             - name: test binaryDigit
               run: |
                   pytest -k test_binaryDigit -v
+<<<<<<< HEAD
+            - name: test ram
+              run: |
+                  pytest -k test_ram -v     
+            - name: test Register8
+              run: |
+                  pytest -k test_register8 -v                   
 
             - name: test registerN
               run: |

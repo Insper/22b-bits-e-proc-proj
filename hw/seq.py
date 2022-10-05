@@ -2,6 +2,8 @@
 
 from myhdl import *
 
+from hw.components import mux2way
+
 
 @block
 def ram(dout, din, addr, we, clk, rst, width, depth):
@@ -56,10 +58,11 @@ def register8(i, load, output, clk, rst):
 @block
 def binaryDigit(i, load, output, clk, rst):
     q, d, clear, presset = [Signal(bool(0)) for i in range(4)]
-
+    mux = mux2way(d,q,i,load)
+    fl1pfl0p = dff(q,d,clear,presset,clk,rst)
     @always_comb
     def comb():
-        pass
+        output.next = q
 
     return instances()
 

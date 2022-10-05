@@ -3,6 +3,7 @@
 from myhdl import *
 
 from hw.components import mux2way
+from hw.ula import inc
 
 
 @block
@@ -20,15 +21,24 @@ def ram(dout, din, addr, we, clk, rst, width, depth):
 
 @block
 def pc(increment, load, i, output, width, clk, rst):
+    muxout,mux2out,inc_out = [Signal(modbv(0)[width:]) for i in range(3)]
     regIn = Signal(modbv(0)[width:])
     regOut = Signal(modbv(0)[width:])
     regLoad = Signal(bool(0))
 
+    r = registerN(regIn, regLoad, regOut, width, clk, rst)
+
+    _inc = inc(regOut,inc_out)
+    mux1 = mux2way(muxout,False,inc_out,increment)
+    mux2 = mux2way(mux2out,muxout,i,load)
+    mux3 = mux2way(regIn,mux2out,False,rst)
+
     @always_comb
     def comb():
-        pass
-
+        regLoad.next = rst or increment or load
+        output.next = regOut
     return instances()
+
 
 
 @block

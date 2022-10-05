@@ -106,6 +106,10 @@ jobs:
       - name: test registerN
         run: |
           pytest hw/test_seq.py -k test_registerN
+      
+      - name: test pc
+        run: |
+          pytest hw/test_seq.py -k test_pc
 
 
 

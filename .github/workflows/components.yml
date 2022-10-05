@@ -103,6 +103,10 @@ jobs:
         run: |
           pytest hw/test_seq.py -k test_register8
 
+      - name: test registerN
+        run: |
+          pytest hw/test_seq.py -k test_registerN
+
 
 
 

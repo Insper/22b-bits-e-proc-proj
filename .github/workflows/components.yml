@@ -120,4 +120,7 @@ jobs:
                   pytest -k test_binaryDigit -v
             - name: test ram
               run: |
-                  pytest -k test_ram -v                   
+                  pytest -k test_ram -v     
+            - name: test Register8
+              run: |
+                  pytest -k test_register8 -v                   

@@ -120,4 +120,4 @@ jobs:
                   pytest -k test_binaryDigit -v
             - name: test ram
               run: |
-                  pytest -k test_ram -v
+                  pytest -k test_ram -v                   

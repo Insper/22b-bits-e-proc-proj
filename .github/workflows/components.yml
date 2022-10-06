@@ -111,6 +111,9 @@ jobs:
         run: |
           pytest hw/test_seq.py -k test_pc
 
+      - name: test ram
+        run: |
+          pytest hw/test_seq.py -k test_ram
 
 
 

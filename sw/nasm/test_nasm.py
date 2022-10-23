@@ -86,11 +86,11 @@ def test_div():
 def test_isEven():
     ram = {0: 2, 5: 64}
     tst = {0: 1}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst, 10000)
 
     ram = {0: 2, 5: 1023}
     tst = {0: 0}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst, 100000)
 
 
 def test_pow():

@@ -19,3 +19,32 @@
 ;  RAM[13] = r
 ;  RAM[14] = a
 ; 
+
+;PALINDROMO
+
+leaw $0, %A
+movw  $0, (%A)
+leaw $10, %A
+movw (%A), %D
+leaw $14, %A
+movw (%A), %A
+
+subw %A, %D, %D
+leaw $NPALINDROMO, %A
+jne 
+nop
+
+leaw $11, %A
+movw (%A), %D
+leaw $13, %A
+movw (%A), %A
+
+subw %A, %D, %D
+leaw $NPALINDROMO, %A
+jne 
+nop
+
+leaw $0, %A
+movw $1, (%A)
+
+NPALINDROMO:

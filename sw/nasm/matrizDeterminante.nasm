@@ -18,3 +18,77 @@
 ; RAM[1003] = b0
 ; RAM[1004] = b1
 
+;MATRIZDETERMINANTE
+
+leaw $1000, %A
+movw (%A), %D
+leaw $1, %A
+movw %D, (%A)
+leaw $1004, %A
+movw (%A), %D
+leaw $2, %A
+movw %D, (%A)
+leaw $3, %A
+movw $0, (%A)
+
+WHILE:
+    leaw $1, %A
+    movw (%A), %D
+    leaw $END, %A
+    je
+    nop
+
+    leaw $2, %A
+    movw (%A), %D
+    leaw $3, %A
+    addw (%A), %D, %D
+    movw %D, (%A)
+
+    leaw $1, %A
+    subw (%A), $1, %D
+    movw %D, (%A)
+
+    leaw $WHILE, %A
+    jmp
+    nop
+END:
+
+leaw $1001, %A
+movw (%A), %D
+leaw $4, %A
+movw %D, (%A)
+leaw $1003, %A
+movw (%A), %D
+leaw $5, %A
+movw %D, (%A)
+leaw $6, %A
+movw $0, (%A)
+
+WHILE1:
+    leaw $4, %A
+    movw (%A), %D
+    leaw $END1, %A
+    je
+    nop
+
+    leaw $5, %A
+    movw (%A), %D
+    leaw $6, %A
+    addw (%A), %D, %D
+    movw %D, (%A)
+
+    leaw $4, %A
+    subw (%A), $1, %D
+    movw %D, (%A)
+
+    leaw $WHILE1, %A
+    jmp
+    nop
+END1:
+
+leaw $3, %A
+movw (%A), %D
+leaw $6, %A
+subw %D, (%A), %D
+leaw $0, %A
+movw %D, (%A)

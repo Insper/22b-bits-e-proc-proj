@@ -80,7 +80,7 @@ def test_div():
 
     ram = {0: 1023, 1: 7}
     tst = {2: 146}
-    assert nasm_test("div.nasm", ram, tst, 10000)
+    assert nasm_test("div.nasm", ram, tst, 50000)
 
 
 def test_isEven():

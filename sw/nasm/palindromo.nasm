@@ -19,3 +19,48 @@
 ;  RAM[13] = r
 ;  RAM[14] = a
 ; 
+
+
+
+
+leaw $10, %A
+movw (%A), %D
+leaw $14, %A
+subw (%A), %D, %D
+leaw $END, %A
+jne
+nop
+
+leaw $11, %A
+movw (%A), %D
+leaw $13, %A
+subw (%A), %D, %D
+leaw $END, %A
+jne
+nop
+
+leaw $END2, %A
+jmp
+nop
+
+
+END:
+leaw $0, %A
+movw %A, %D
+leaw $0, %A
+movw %D, (%A)
+leaw $END3, %A
+jmp
+nop
+
+END2:
+leaw $1, %A
+movw %A, %D
+leaw $0, %A
+movw %D, (%A)
+leaw $END3, %A
+jmp
+nop
+
+END3:
+nop

@@ -24,7 +24,7 @@ leaw $1000, %A
 movw (%A), %D
 leaw $1, %A
 movw %D, (%A)
-leaw $1003, %A
+leaw $1004, %A
 movw (%A), %D
 leaw $2, %A
 movw %D, (%A)
@@ -57,7 +57,7 @@ leaw $1001, %A
 movw (%A), %D
 leaw $4, %A
 movw %D, (%A)
-leaw $1004, %A
+leaw $1003, %A
 movw (%A), %D
 leaw $5, %A
 movw %D, (%A)

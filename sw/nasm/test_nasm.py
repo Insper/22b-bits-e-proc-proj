@@ -153,15 +153,11 @@ def test_factorial():
     assert nasm_test("factorial.nasm", ram, tst, 10000)
 
 def test_matrizdeterminante():
-    ram = {1000: 3, 1001: 3, 1003:2, 1004:1}
+    ram = {1000: 3, 1001: 3, 1003:2, 1004:3}
     tst = {0: 3}
     assert nasm_test("matrizDeterminante.nasm", ram, tst, 10000)
 
-    ram = {1000: 1, 1001: 1, 1003:1, 1004:1}
-    tst = {0: 0}
-    assert nasm_test("matrizDeterminante.nasm", ram, tst, 10000)
-
-    ram = {1000: 6, 1001: 3, 1003:2, 1004:1}
+    ram = {1000: 5, 1001: 3, 1003:2, 1004:3}
     tst = {0: 9}
     assert nasm_test("matrizDeterminante.nasm", ram, tst, 10000)
 

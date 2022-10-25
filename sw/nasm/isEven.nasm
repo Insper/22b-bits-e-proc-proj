@@ -29,8 +29,7 @@ WHILE:
 
 IMPAR:
     leaw $0, %A
-    leaw $0 , %D
-    movw %D, (%A)
+    movw $0, (%A)
     leaw $END, %A
     jmp
     nop
@@ -38,7 +37,6 @@ IMPAR:
 
 PAR:
     leaw $0, %A
-    leaw $1, %D
-    movw %D, (%A)
+    movw $1, (%A)
 
 END:

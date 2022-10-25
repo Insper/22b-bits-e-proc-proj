@@ -8,62 +8,37 @@
 ; em RAM[0] e 0 caso contrário.
 
 PREPARANDO:
-    leaw $3, %A
-    movw $0, (%A)
-    leaw $1, %A
-    incw %D
-    incw %D
-    movw %D, (%A)
-WHILE:
     leaw $5, %A
     movw (%A), %D
-    leaw $1, %A
-    subw %D, (%A), %D
-
-
-    leaw $END, %A
-    jle
+    leaw $PAR, %A
+    je 
     nop 
 
-    leaw $3, %A 
-    movw %D, (%A)
-
-    leaw $5, %A
-    movw (%A), %D
-    leaw $1, %A
-    subw %D, (%A), %D
-    leaw $5, %A
-    movw %D, (%A)
-    leaw $2, %A
-    addw (%A), $1, %D
-    movw %D, (%A)
+WHILE:
+    decw %D
+    decw %D
+    leaw $PAR, %A
+    je
+    nop
+    leaw $IMPAR, %A
+    jl
+    nop
     leaw $WHILE, %A
     jmp
-    nop 
-END:
-    leaw $3, %A 
-    movw (%A), %D
-    leaw $2, %A 
-    movw %D, (%A)
-
-IF:
-    leaw $2, %A
-    movw (%A), %D
-    leaw $EPAR, %A
-    je %D
     nop
 
+IMPAR:
     leaw $0, %A
-    movw $0, %D
+    leaw $0 , %D
     movw %D, (%A)
-    leaw $END2, %A
+    leaw $END, %A
     jmp
     nop
+    
 
-
-EPAR:
+PAR:
     leaw $0, %A
-    movw $1, %D
+    leaw $1, %D
     movw %D, (%A)
 
-END2:
+END:

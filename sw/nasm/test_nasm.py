@@ -173,3 +173,12 @@ def test_sweled():
     ram = {21185: 2}
     tst = {21185: 2, 21184: 508}
     assert nasm_test("SWeLED.nasm", ram, tst, 10000)
+
+def test_mult2():
+    ram = {5: 64}
+    tst = {0: 1}
+    assert nasm_test("multiploDeDois.nasm", ram, tst, 10000)
+
+    ram = {5: 1023}
+    tst = {0: 0}
+    assert nasm_test("multiploDeDois.nasm", ram, tst, 100000)

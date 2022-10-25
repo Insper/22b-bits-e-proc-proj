@@ -182,3 +182,12 @@ def test_mult2():
     ram = {5: 1023}
     tst = {0: 0}
     assert nasm_test("multiploDeDois.nasm", ram, tst, 100000)
+
+def test_sweled2():
+    ram = {}
+    tst = {21184: 180}
+    assert nasm_test("SWeLED2.nasm", ram, tst, 10000)
+
+    ram = {5:8, 21185:257}
+    tst = {21185:257, 21184: 446}
+    assert nasm_test("SWeLED2.nasm", ram, tst, 10000)

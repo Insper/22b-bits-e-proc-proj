@@ -58,7 +58,7 @@ def test_mod():
 
     ram = {0: 1023, 1: 7}
     tst = {2: 1}
-    assert nasm_test("mod.nasm", ram, tst, 10000)
+    assert nasm_test("mod.nasm", ram, tst, 50000)
 
 
 def test_div():

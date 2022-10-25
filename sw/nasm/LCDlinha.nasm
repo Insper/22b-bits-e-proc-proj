@@ -20,11 +20,12 @@ WHILE:
     movw %D, %A
     movw $-1, (%A)
     leaw $0, %A
-    addw (%A), $1, %D 
+    movw (%A), %D
+    incw %D 
     movw %D, (%A)
     leaw $1, %A
     subw (%A), $1, %D
     movw %D, (%A)
     leaw $WHILE, %A
-    jle
+    jg
     nop

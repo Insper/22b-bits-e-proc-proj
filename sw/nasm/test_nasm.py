@@ -86,11 +86,11 @@ def test_div():
 def test_isEven():
     ram = {0: 2, 5: 64}
     tst = {0: 1}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst,10000)
 
     ram = {0: 2, 5: 1023}
     tst = {0: 0}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst,10000)
 
 
 def test_pow():
@@ -142,12 +142,12 @@ def test_linha():
 def test_factorial():
     ram = {0: 0}
     tst = {1: math.factorial(ram[0])}
-    assert nasm_test("factorial.nasm", ram, tst, 10000)
+    assert nasm_test("factorial.nasm", ram, tst, 50000)
 
-    ram = {1: 0}
+    ram = {0: 0}
     tst = {1: math.factorial(ram[0])}
-    assert nasm_test("factorial.nasm", ram, tst, 10000)
+    assert nasm_test("factorial.nasm", ram, tst, 50000)
 
-    ram = {1: 4}
+    ram = {0: 4}
     tst = {1: math.factorial(ram[0])}
-    assert nasm_test("factorial.nasm", ram, tst, 10000)
+    assert nasm_test("factorial.nasm", ram, tst, 50000)

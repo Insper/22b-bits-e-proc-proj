@@ -15,8 +15,8 @@ PREPARANDO:
     nop 
 
 WHILE:
-    decw %D
-    decw %D
+    leaw $2, %A
+    subw %D, %A, %D
     leaw $PAR, %A
     je
     nop

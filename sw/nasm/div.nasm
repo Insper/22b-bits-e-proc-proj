@@ -12,7 +12,7 @@ WHILE:
     movw (%A), %D
 
     leaw $END, %A 
-    jle
+    je
     nop
 
     leaw $1, %A 

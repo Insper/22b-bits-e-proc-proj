@@ -14,8 +14,11 @@ class SymbolTable:
         SP, LCL, ARG, THIS, THAT
         SCREEN, KBD, ..
         """
+    
+        self.table = {'SP':0,'LCL':1,'ARG':2,'THIS':3,'THAT':4,'SCREEN':16384,'LED':21184,'SW':21185,"KBD":24576}
+        for i in range(0,16):
+            self.table[f'R{i}'] = i
 
-        pass
 
     # TODO
     def addEntry(self, symbol: str, address: int):

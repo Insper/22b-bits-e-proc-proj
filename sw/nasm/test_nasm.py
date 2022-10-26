@@ -193,8 +193,8 @@ def test_sweled2():
     assert nasm_test("SWeLED2.nasm", ram, tst, 10000)
 
 def test_vectorMean():
-    ram = {4:3,5:2,6:2,7:2}
-    tst = {0:2,1:6}
+    ram = {4:4,5:1,6:2,7:1,8:4}
+    tst = {0:2,1:8}
     assert nasm_test("vectorMean.nasm", ram, tst, 10000)
 
     ram = {4:4,5:1,6:2,7:3,8:4}

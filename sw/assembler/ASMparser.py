@@ -51,7 +51,7 @@ class Parser:
         """
         if self.currentCommand[0] == 'leaw':
             return self.CommandType['A']
-        elif self.currentCommand[0][-1] != 'w':
+        elif self.currentCommand[0][-1] == ':':
             return self.CommandType['L']
         else:
             return self.CommandType['C']

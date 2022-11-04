@@ -12,6 +12,7 @@ PREPARANDO:
     movw %A, %D
     movw %D, (%A)
     movw (%A), %D       
+
     leaw $5, %A
     movw (%A), %D
     leaw $PAR, %A
@@ -33,9 +34,7 @@ WHILE:
 
 IMPAR:
     leaw $0, %A
-    movw %A, %D
-    leaw $0, %A
-    movw %D, (%A)
+    movw $0, (%A)
     leaw $END, %A
     jmp
     nop
@@ -46,5 +45,8 @@ PAR:
     movw %A, %D
     leaw $0, %A
     movw %D, (%A)
+    leaw $0, %A
+    movw $1, (%A)
+
 
 END:

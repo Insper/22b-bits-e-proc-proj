@@ -25,7 +25,6 @@ WHILE:
     leaw $0, %A
     movw %D, (%A)
 
-    
     leaw $2, %A
     addw (%A), $1, %D
     movw %D, (%A)

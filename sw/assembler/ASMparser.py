@@ -5,7 +5,7 @@ class Parser:
     # DONE
     def __init__(self, inputFile):
         self.file = inputFile  # self.openFile()  # arquivo de leitura
-        asm_parser
+        # asm_parser
         self.lineNumber = 0
         r = 0  # linha atual do arquivo (nao do codigo gerado)
 

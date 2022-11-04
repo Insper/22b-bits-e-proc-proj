@@ -11,6 +11,7 @@ class ASM:
         self.symbolTable = SymbolTable()
         self.parser = Parser(nasm)
         self.code = Code()
+        self.hackLineCount = 0
 
     # DONE
     def run(self):
@@ -31,7 +32,15 @@ class ASM:
 
         Dependencia : Parser, SymbolTable
         """
-        self.parser.reset()
+        self.hackLineCount = 0
+        for lines in self.parser.file:
+            while self.parser.advanced():
+                if self.parser.commandType() == 'L_COMMAND':
+                    if not self.symbolTable.contains(self.parser.label()):
+                        self.symbolTable.addEntry(self.parser.label(), self.hackLineCount)
+                else:
+                    self.hackLineCount += 1
+
 
     # TODO
     def generateMachineCode(self):
@@ -45,8 +54,11 @@ class ASM:
 
         while self.parser.advanced():
             if self.parser.commandType() == "C_COMMAND":
-                bin = ""
+                bin = '0x' + self.code.toBinary(self.hack[1])
                 self.hack.write(bin + "\n")
+
             elif self.parser.commandType() == "A_COMMAND":
-                bin = ""
+                bin = "0x1000" + self.code.comp(self.hack)+'0'+self.code.dest(self.hack)+self.code.jump(self.hack)
                 self.hack.write(bin + "\n")
+                
+        self.hack.close()

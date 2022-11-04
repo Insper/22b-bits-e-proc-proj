@@ -37,16 +37,16 @@ class Parser:
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        linha_final = []
+        self.currentCommand = []
         for linha in self.file:
-            linha = linha[0:].split()
+            linha = linha.split()
             if linha != []:
                 if linha[0] != ";":
                         for comando in linha:
                             if comando[-1] == ',':
                                 comando = comando[:-1]
-                            linha_final.append(comando)
-                        self.currentCommand = linha_final
+                            self.currentCommand.append(comando)
+
                         return True
         return False
 

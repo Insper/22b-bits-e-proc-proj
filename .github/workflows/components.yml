@@ -28,6 +28,4 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test asmparser
-        run: |
-          pytest sw/assembler/test_asmparser.py
+

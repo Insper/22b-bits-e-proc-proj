@@ -5,6 +5,10 @@ class Parser:
     # DONE
     def __init__(self, inputFile):
         self.file = inputFile  # self.openFile()  # arquivo de leitura
+        asm_parser
+        self.lineNumber = 0
+        r = 0  # linha atual do arquivo (nao do codigo gerado)
+
         self.lineNumber = 0  # linha atual do arquivo (nao do codigo gerado)
         self.currentCommand = ""  # comando atual
         self.currentLine = ""  # linha de codigo atual
@@ -34,10 +38,34 @@ class Parser:
         @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
         """
 
+    
+        arquivo = self.file
+        line = arquivo.readline()
+       
+        while ";" in line or line == "\n":
+            line = arquivo.readline()
+
+
+        line = line.strip()
+        line = line.replace(',', '')
+        line = line.split()
+
+            
+
+        self.currentLine = self.lineNumber
+        self.currentCommand = line
+        self.lineNumber+=1
+        
+        if len(line) == 0 :
+            return False
+        else:
+            return True
+            
+
+
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        pass
 
     # TODO
     def commandType(self):
@@ -48,10 +76,20 @@ class Parser:
          - self.commandType['C'] para todos os outros comandos
         @param  self.currentCommand
         @return o tipo da instrução.
-        """
 
+        """    
+
+       
+        if 'leaw' == self.currentCommand[0]:
+            
+            return self.CommandType['A']
+        elif self.currentCommand[0].isupper():
+            return self.CommandType['L']
+        else :
+            return self.CommandType['C']
+
+        
         # analise o self.currentCommand
-        pass
 
 
     # TODO
@@ -64,7 +102,10 @@ class Parser:
         """
 
         # analise o self.currentCommand
-        pass
+        if self.commandType() == 'A_COMMAND':
+            return self.currentCommand[1].replace('$', '')
+
+
 
     # TODO
     def label(self):
@@ -76,6 +117,12 @@ class Parser:
         """
 
         # analise o self.currentCommand
+
+
+        if self.commandType() == 'L_COMMAND':
+            return self.currentCommand[0][0:-1]
+
+
         pass
 
     # DONE

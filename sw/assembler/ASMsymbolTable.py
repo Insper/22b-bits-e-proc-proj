@@ -6,7 +6,6 @@ class SymbolTable:
         self.table = {}
         self.init()
 
-    # TODOinit
     def init(self):
         """
         Inicializa a tabela de simbolos com os simbolos pre definidos
@@ -14,7 +13,9 @@ class SymbolTable:
         SP, LCL, ARG, THIS, THAT
         SCREEN, KBD, ..
         """
+
         self.table = {'R0': 0, 'R1': 1, 'R2': 2, 'R3': 3, 'R4': 4, 'R5': 5, 'R6': 6, 'R7': 7, 'R8': 8, 'R9': 9, 'R10': 10, 'R11': 11, 'R12': 12, 'R13': 13, 'R14': 14, 'R15': 15, 'SP' : 0, 'LCL':1, 'ARG':2, 'THIS':3, 'THAT':4, 'SCREEN' : 16384, 'LED':21184, 'SW':21185, 'KBD': 24576}        
+
 
     # TODO
     def addEntry(self, symbol: str, address: int):
@@ -23,7 +24,9 @@ class SymbolTable:
         @param symbol símbolo a ser armazenado na tabela de símbolos.
         @param address símbolo a ser armazenado na tabela de símbolos.
         """
+
         self.table[symbol] = address
+
 
     # TODO
     def contains(self, symbol):
@@ -32,10 +35,12 @@ class SymbolTable:
         @param  symbol símbolo a ser procurado na tabela de símbolos.
         @return Verdadeiro se símbolo está na tabela de símbolos, Falso se não está na tabela de símbolos.
         """
+
         for key in self.table:
             if key == symbol:
                 return True
         return False
+
 
     # TODO
     def getAddress(self, symbol):
@@ -44,6 +49,7 @@ class SymbolTable:
         @param  symbol símbolo a ser procurado na tabela de símbolos.
         @return valor numérico associado ao símbolo procurado.
         """
+
         for key,valor in self.table.items():
             if key == symbol:
                 return valor

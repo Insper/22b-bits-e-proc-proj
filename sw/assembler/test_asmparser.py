@@ -20,9 +20,12 @@ def test_advanced():
     assert ptest.command() == ['leaw', '$0', '%A']
 
     assert ptest.advanced() is True
-    assert ptest.command() == ['movw', '(%A)', '%D']
+
+    assert ptest.command() == ['movw', '(%A)', '%D'] 
 
     assert ptest.advanced() is True
+
+
     assert ptest.command() == ['end:']
 
     assert ptest.advanced() is False

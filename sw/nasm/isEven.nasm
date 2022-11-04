@@ -8,6 +8,11 @@
 ; em RAM[0] e 0 caso contrário.
 
 PREPARANDO:
+    leaw $0, %A
+    movw %A, %D
+    movw %D, (%A)
+    movw (%A), %D       
+
     leaw $5, %A
     movw (%A), %D
     leaw $PAR, %A
@@ -36,7 +41,12 @@ IMPAR:
     
 
 PAR:
+    leaw $1, %A
+    movw %A, %D
+    leaw $0, %A
+    movw %D, (%A)
     leaw $0, %A
     movw $1, (%A)
+
 
 END:

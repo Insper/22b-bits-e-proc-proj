@@ -13,7 +13,7 @@ class Parser:
     # DONE
     def openFile(self):
         try:
-            return open(self.inputFile, "r")
+            return open(self.file, "r")
         except IOError:
             sys.exit("Erro: inputFile not found: {}".format(self.inputFile))
 
@@ -37,7 +37,18 @@ class Parser:
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        pass
+        linha_final = []
+        for linha in self.file:
+            linha = linha[0:].split()
+            if linha != []:
+                if linha[0] != ";":
+                        for comando in linha:
+                            if comando[-1] == ',':
+                                comando = comando[:-1]
+                            linha_final.append(comando)
+                        self.currentCommand = linha_final
+                        return True
+        return False
 
     # TODO
     def commandType(self):
@@ -67,7 +78,7 @@ class Parser:
         """
 
         # analise o self.currentCommand
-        pass
+        return self.currentCommand[1][1:]
 
     # TODO
     def label(self):
@@ -78,8 +89,7 @@ class Parser:
         @return o símbolo da instrução (sem os dois pontos).
         """
 
-        # analise o self.currentCommand
-        pass
+        return self.currentCommand[0][0:-1]
 
     # DONE
     def command(self):

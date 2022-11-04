@@ -31,8 +31,35 @@ class Code:
         - in mnemnonic: vetor de mnemônicos "instrução" a ser analisada.
         - return bits:  Opcode (String de 7 bits) com código em linguagem de máquina para a instrução.
         """
+        dict_comp = {'$0':'101010','$1':'111111','$-1':'111010','%D':'001100','%A':'110000','(%A)':'110000','!%D':"001101","!%A":"110001","!(%A)":"110001",'-%D':"001111","-%A":"110011","-(%A)":"110011",'%D+$1':"011111",'$1+%D':"011111","%A+$1":"110111","$1+%A":"110111","(%A)+$1":"110111","$1+(%A)":"110111",'%D-$1':"001110","%A-$1":"110010","(%A)-$1":"110010",'%D+%A':'000010','%D+(%A)':'000010','%D-%A':'010011','%D-(%A)':'010011','%A+%D':'000010','(%A)+%D':'000010','%A-%D':'000111','(%A)-%D':'000111','&':'000000','|':'010101'}
+        # dict_n = {'notw':'!','negw':'-','incw':'+$1','decw':'-$1',}
+        if mnemnonic[0][0] == 'j':
+            return '0001100'
+        
+        else:
+            n = mnemnonic[1]
+            if mnemnonic[0] == 'notw':
+                n = '!'+mnemnonic[1]
+            elif mnemnonic[0] == 'negw':
+                n = '-'+mnemnonic[1]
+            elif mnemnonic[0] == 'incw':
+                n = mnemnonic[1]+'+$1'
+            elif mnemnonic[0] == 'decw':
+                n = mnemnonic[1]+'-$1'
+            elif mnemnonic[0] == 'subw':
+                n = mnemnonic[1]+'-'+mnemnonic[2]
+            elif mnemnonic[0] == 'rsubw':
+                n = mnemnonic[2]+'-'+mnemnonic[1]
+            elif mnemnonic[0] == 'addw':
+                n = mnemnonic[1]+'+'+mnemnonic[2]
+            elif mnemnonic[0] == 'andw':
+                n = '&'
+            elif mnemnonic[0] == 'orw':
+                n = '|'
 
-        return '0000000'
+            if '(' in mnemnonic[1] or (len(mnemnonic)>3 and '(' in mnemnonic[2]):
+                return '1'+dict_comp[n]
+            return '0'+dict_comp[n]
 
     # TODO
     def jump(self, mnemnonic):

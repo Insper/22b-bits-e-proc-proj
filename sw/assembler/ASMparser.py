@@ -8,7 +8,7 @@ class Parser:
         self.lineNumber = 0  # linha atual do arquivo (nao do codigo gerado)
         self.currentCommand = ""  # comando atual
         self.currentLine = ""  # linha de codigo atual
-        self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND"}
+        self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND", "J": "J_COMMAND"}
 
     # DONE
     def openFile(self):
@@ -42,12 +42,21 @@ class Parser:
             linha = linha[0:].split()
             if linha != []:
                 if linha[0] != ";":
-                        for comando in linha:
+
+                    self.currentLine = linha
+                    notAcomment = True
+                    for comando in linha:
+                        
+                        if notAcomment:
                             if comando[-1] == ',':
                                 comando = comando[:-1]
-                            linha_final.append(comando)
-                        self.currentCommand = linha_final
-                        return True
+                            if comando[0] == ';': 
+                                notAcomment = False
+                            else:
+                                linha_final.append(comando)
+
+                    self.currentCommand = linha_final
+                    return True
         return False
 
     # TODO
@@ -60,9 +69,12 @@ class Parser:
         @param  self.currentCommand
         @return o tipo da instrução.
         """
-        if self.currentCommand[0] == 'leaw':
+        cmnd = self.currentCommand[0]
+        if cmnd == 'leaw':
             return self.CommandType['A']
-        elif self.currentCommand[0][-1] == ':':
+        elif cmnd[0] == 'j':
+            return self.CommandType['J']
+        elif cmnd[-1] == ':':
             return self.CommandType['L']
         else:
             return self.CommandType['C']

@@ -50,7 +50,7 @@ def test_asm_run():
 
 def test_asm_hack():
     fNasm = open(NASM_IN, 'r')
-    fHack = open(HACK_OUT, "w")
+    fHack = open(HACK_OUT, 'w')
     asm = ASM(fNasm, fHack)
     asm.run()
     fHack.close()

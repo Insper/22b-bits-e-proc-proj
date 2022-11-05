@@ -15,8 +15,35 @@ class Code:
         - return bits: String de 4 bits com código em linguagem de máquina
           que define o endereco da operacao
         """
-
-        bits = "0000"
+        if len(mnemnonic) == 1:
+            bits = '000'
+        elif len(mnemnonic) == 2:
+            if mnemnonic[-1] == "%A":
+                bits = '001'
+            elif mnemnonic[-1] == "(%A)":
+                bits = '100'
+            elif mnemnonic[-1] == "%D":
+                bits = '010'
+            else : 
+                bits = '000'
+        elif len(mnemnonic) == 3:
+            if mnemnonic[-1] == "%D" :
+                bits = '010'
+            elif mnemnonic[-1] == "%A" :
+                bits = '001'
+            elif mnemnonic[-1] == "(%A)" :
+                bits = '100'
+        else : 
+            if mnemnonic[-2] == '%D' and mnemnonic[-1] == '(%A)' :
+                bits = '110'
+            elif mnemnonic[-2] == '%D' and mnemnonic[-1] == '%D' :
+                bits = '010'
+            elif mnemnonic[-2] == '(%A)' and mnemnonic[-1] == '%A' :
+                bits = '001'
+            elif mnemnonic[-2] == '%A' and mnemnonic[-1] == '%A' :
+                bits = '001'
+            else:
+                bits = "000"
         return bits
 
     # TODO
@@ -37,8 +64,19 @@ class Code:
         - in mnemnonic: vetor de mnemônicos "instrução" a ser analisada.
         - return bits: (String de 3 bits) com código em linguagem de máquina para a instrução.
         """
-
-        bits = "000"
+        dict_jumps = {
+            'jmp' : '111', 
+            'je' : '010', 
+            'jne' : '101', 
+            'jg' : '001', 
+            'jge' : '011', 
+            'jl' : '100', 
+            'jle' : '110'
+        }
+        if mnemnonic[0] in dict_jumps.keys() :
+            bits = dict_jumps[mnemnonic[0]]
+        else :
+            bits = "000"
         return bits
 
     # DONE

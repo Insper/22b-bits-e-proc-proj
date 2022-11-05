@@ -61,7 +61,7 @@ class ASM:
                     bin = "1000" + self.code.comp(self.parser.symbol())+'0'+self.code.dest(self.parser.symbol())+self.code.jump(self.parser.command())
                     string = str(bin + "\n")
                     allStrings += string
-                if self.parser.commandType() == "J_COMMAND":
+                elif self.parser.commandType() == "J_COMMAND":
                     bin = "1000" + '0' + '001100' + '0' + '000' +self.code.jump(self.parser.command())
                     string = str(bin + "\n")
                     allStrings += string

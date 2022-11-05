@@ -57,7 +57,7 @@ class ASM:
         for lines in self.parser.file:
             if self.parser.advanced():
                 cmnd = self.parser.currentCommand[0]
-                if self.parser.commandType() == "A_COMMAND" or cmnd == 'movw' or cmnd == 'addw' or cmnd == 'subw':
+                if self.parser.commandType() == "A_COMMAND" or cmnd == 'movw' or cmnd == 'addw' or cmnd == 'subw' or cmnd == 'decw':
                     bin = "1000" + self.code.comp(self.parser.symbol())+'0'+self.code.dest(self.parser.symbol())+self.code.jump(self.parser.command())
                     string = str(bin + "\n")
                     allStrings += string
@@ -65,9 +65,9 @@ class ASM:
                     bin = "1000" + '0' + '001100' + '0' + '000' +self.code.jump(self.parser.command())
                     string = str(bin + "\n")
                     allStrings += string
-                elif self.parser.command() == 'nop':
+                elif cmnd == 'nop':
                     allStrings += '000000000000000000 \n'
-                else:
+                elif cmnd[-1] != ':':
                     allStrings += f'{self.parser.command()} <------------- erro \n'
                     
         self.hack.write(allStrings)

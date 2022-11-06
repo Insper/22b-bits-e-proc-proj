@@ -5,8 +5,11 @@ class Parser:
     # DONE
     def __init__(self, inputFile):
         self.file = inputFile  # self.openFile()  # arquivo de leitura
+        # asm_parser
         self.lineNumber = 0
         r = 0  # linha atual do arquivo (nao do codigo gerado)
+
+        self.lineNumber = 0  # linha atual do arquivo (nao do codigo gerado)
         self.currentCommand = ""  # comando atual
         self.currentLine = ""  # linha de codigo atual
         self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND"}
@@ -34,6 +37,7 @@ class Parser:
         entrada o método retorna "Falso", senão retorna "Verdadeiro".
         @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
         """
+
     
         arquivo = self.file
         line = arquivo.readline()
@@ -58,10 +62,10 @@ class Parser:
             return True
             
 
+
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        
 
     # TODO
     def commandType(self):
@@ -72,6 +76,7 @@ class Parser:
          - self.commandType['C'] para todos os outros comandos
         @param  self.currentCommand
         @return o tipo da instrução.
+
         """    
 
        
@@ -100,6 +105,8 @@ class Parser:
         if self.commandType() == 'A_COMMAND':
             return self.currentCommand[1].replace('$', '')
 
+
+
     # TODO
     def label(self):
         """
@@ -111,8 +118,10 @@ class Parser:
 
         # analise o self.currentCommand
 
+
         if self.commandType() == 'L_COMMAND':
             return self.currentCommand[0][0:-1]
+
 
         pass
 

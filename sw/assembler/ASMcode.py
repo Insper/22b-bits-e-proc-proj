@@ -19,12 +19,36 @@ class Code:
           que define o endereco da operacao
         """
 
-        mnemnonic2 = "".join(mnemnonic)
-        gamb = {'movw%A%D': '010', 'movw%A(%A)': '100', 'movw%A%D(%A)': '110', 'movw(%A)%D': '010', 'addw(%A)%D%D': '010', 'incw%A': '001', 'incw%D': '010', 'incw(%A)': '100', 'nop': '000', 'subw%D(%A)%A': '001', 'rsubw%D(%A)%A': '001', 'decw%A': '001', 'decw%D': '010',
-                'notw%A': '001', 'notw%D': '010', 'negw%A': '001', 'negw%D': '010', 'andw(%A)%D%D': '010', 'andw%D%A%A': '001', 'orw(%A)%D%D': '010', 'orw%D%A%A': '001', 'jmp': '000', 'je': '000', 'jne': '000', 'jg': '000', 'jge': '000', 'jl': '000', 'jle': '000'}
-
-        return gamb[mnemnonic2]
-
+        if len(mnemnonic) == 1:
+            bits = '000'
+        elif len(mnemnonic) == 2:
+            if mnemnonic[-1] == "%A":
+                bits = '001'
+            elif mnemnonic[-1] == "(%A)":
+                bits = '100'
+            elif mnemnonic[-1] == "%D":
+                bits = '010'
+            else : 
+                bits = '000'
+        elif len(mnemnonic) == 3:
+            if mnemnonic[-1] == "%D" :
+                bits = '010'
+            elif mnemnonic[-1] == "%A" :
+                bits = '001'
+            elif mnemnonic[-1] == "(%A)" :
+                bits = '100'
+        else : 
+            if mnemnonic[-2] == '%D' and mnemnonic[-1] == '(%A)' :
+                bits = '110'
+            elif mnemnonic[-2] == '%D' and mnemnonic[-1] == '%D' :
+                bits = '010'
+            elif mnemnonic[-2] == '(%A)' and mnemnonic[-1] == '%A' :
+                bits = '001'
+            elif mnemnonic[-2] == '%A' and mnemnonic[-1] == '%A' :
+                bits = '001'
+            else:
+                bits = "000"
+        return bits
 
     # TODO
     def comp(self, mnemnonic):
@@ -50,6 +74,21 @@ class Code:
         - in mnemnonic: vetor de mnemônicos "instrução" a ser analisada.
         - return bits: (String de 3 bits) com código em linguagem de máquina para a instrução.
         """
+
+        dict_jumps = {
+            'jmp' : '111', 
+            'je' : '010', 
+            'jne' : '101', 
+            'jg' : '001', 
+            'jge' : '011', 
+            'jl' : '100', 
+            'jle' : '110'
+        }
+        if mnemnonic[0] in dict_jumps.keys() :
+            bits = dict_jumps[mnemnonic[0]]
+        else :
+            bits = "000"
+        return bits
 
     # DONE
         if len(mnemnonic) == 1:

@@ -57,17 +57,24 @@ class ASM:
         for lines in self.parser.file:
             if self.parser.advanced():
                 cmnd = self.parser.currentCommand[0]
-                if self.parser.commandType() == "A_COMMAND" or cmnd == 'movw' or cmnd == 'addw' or cmnd == 'subw' or cmnd == 'decw':
-                    bin = "1000" + self.code.comp(self.parser.symbol())+'0'+self.code.dest(self.parser.symbol())+self.code.jump(self.parser.command())
+
+                if self.parser.commandType() == "A_COMMAND":
+                    bin = "0000" + '0' + '001100' + '0' + '000' +self.code.jump(self.parser.command())
                     string = str(bin + "\n")
                     allStrings += string
-                elif self.parser.commandType() == "J_COMMAND":
-                    bin = "1000" + '0' + '001100' + '0' + '000' +self.code.jump(self.parser.command())
-                    string = str(bin + "\n")
-                    allStrings += string
+
                 elif cmnd == 'nop':
                     allStrings += '000000000000000000 \n'
-                elif cmnd[-1] != ':':
+                    
+                elif cmnd[-1] == ':':
+                    pass # for tags
+                
+                elif self.parser.commandType() == "C_COMMAND":
+                    bin = "1000" + self.code.comp(self.parser.symbol()) + '0' + self.code.dest(self.parser.symbol()) + self.code.jump(self.parser.command())
+                    string = str(bin + "\n")
+                    allStrings += string
+
+                else: 
                     allStrings += f'{self.parser.command()} <------------- erro \n'
                     
         self.hack.write(allStrings)

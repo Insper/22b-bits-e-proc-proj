@@ -17,7 +17,7 @@ class Code:
         """
 
         dest_dict = {'%A':'001','%D':'010','(%A)':'100','(%A), %A':'101','%A, (%A)':'101','(%A), %D':'110','%D, (%A)':'110','(%A), %D, %A':'111','(%A), %A, %D':'111','%A, (%A), %D':'111','%D, (%A), %A':'111','%A, %D, (%A)':'111','%D, %A, (%A)':'111','%D, %A':'011', '%A, %D':'011'}
-        if mnemnonic in dest_dict:
+        if mnemnonic[-1] in dest_dict:
             if mnemnonic[0] == 'movw':
                 if len(mnemnonic)>3:
                     mnemnonic = [mnemnonic[0], mnemnonic[1], mnemnonic[2]+", "+mnemnonic[3]]
@@ -31,8 +31,10 @@ class Code:
         - in mnemnonic: vetor de mnemônicos "instrução" a ser analisada.
         - return bits:  Opcode (String de 7 bits) com código em linguagem de máquina para a instrução.
         """
-
-        return '0000000'
+        dict_comp = {'$0':'101010','$1':'111111','$-1':'111010','%D':'001100','%A':'110000','(%A)':'110000','!%D':"001101","!%A":"110001","!(%A)":"110001",'-%D':"001111","-%A":"110011","-(%A)":"110011",'%D+$1':"011111",'$1+%D':"011111","%A+$1":"110111","$1+%A":"110111","(%A)+$1":"110111","$1+(%A)":"110111",'%D-$1':"001110","%A-$1":"110010","(%A)-$1":"110010",'%D+%A':'000010','%D+(%A)':'000010','%D-%A':'010011','%D-(%A)':'010011','%A+%D':'000010','(%A)+%D':'000010','%A-%D':'000111','(%A)-%D':'000111','&':'000000','|':'010101'}
+        # dict_n = {'notw':'!','negw':'-','incw':'+$1','decw':'-$1',}
+        if mnemnonic[0][0] == 'j':
+            return '0001100'
 
     # TODO
     def jump(self, mnemnonic):

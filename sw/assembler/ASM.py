@@ -32,6 +32,15 @@ class ASM:
         Dependencia : Parser, SymbolTable
         """
         self.parser.reset()
+        dict_entradas = {}
+        while self.parser.advanced() == True:
+            if ':' in self.parser.command()[0]:
+                dict_entradas[self.parser.command()[0][:-1]] = self.parser.currentLine
+
+        for key,value in dict_entradas.items():
+            self.symbolTable.addEntry(key,value)
+        
+
 
     # TODO
     def generateMachineCode(self):

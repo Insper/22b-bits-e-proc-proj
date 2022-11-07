@@ -43,7 +43,7 @@ class Parser:
             linha = linha[0:].split()
             if linha != []:
                 if linha[0] != ";":
-
+                    #print(linha)
                     self.currentLine = linha
                     notAcomment = True
                     for comando in linha:

@@ -1,6 +1,6 @@
-from ASMsymbolTable import SymbolTable
-from ASMcode import Code
-from ASMparser import Parser
+from .ASMsymbolTable import SymbolTable
+from .ASMcode import Code
+from .ASMparser import Parser
 
 
 class ASM:
@@ -72,16 +72,18 @@ class ASM:
                 allStrings += string
 
             elif cmnd == 'nop':
-                allStrings += '000000000000000000 \n'
+                allStrings += '100001010100000000\n'
                 
             elif self.parser.commandType() == "L_COMMAND":
                 pass # for tags
 
-            elif self.parser.command()[0][0] == 'j':
-                bin = '100000011000000' + self.code.jump(self.parser.command())
+            elif cmnd[0] == 'j':
+                bin = '100000011000000' + self.code.jump(self.parser.currentCommand)
+                string = str(bin + "\n")
+                allStrings += string
             
             elif self.parser.commandType() == "C_COMMAND":
-                bin = "1000" + self.code.comp(self.parser.command()) + '0' + self.code.dest(self.parser.symbol()) + '000'
+                bin = "1000" + self.code.comp(self.parser.command()) + '0' + self.code.dest(self.parser.currentCommand) + '000'
                 string = str(bin + "\n")
                 allStrings += string
 

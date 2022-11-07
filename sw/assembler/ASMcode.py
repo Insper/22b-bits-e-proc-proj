@@ -77,4 +77,18 @@ class Code:
         """
         Converte um valor inteiro para binário 16 bits.
         """
-        return f"{int(value):016b}"
+        if str(value)[0] == '-':
+        
+            x =  f'{int(value):016b}'
+            result = ''
+            for bin in x:
+                if bin == '1':
+                    result += '0'
+                else:
+                    result += '1'
+            x = int(result, 2)
+            x += 1
+            return f"{int(x):016b}"
+            
+        else:
+            return f"{int(value):016b}"

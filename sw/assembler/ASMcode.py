@@ -47,7 +47,6 @@ class Code:
                 n = mnemnonic[1]+'-$1'
             elif mnemnonic[0] == 'subw':
                 n = mnemnonic[1]+'-'+mnemnonic[2]
-                print(n)
             elif mnemnonic[0] == 'rsubw':
                 n = mnemnonic[2]+'-'+mnemnonic[1]
             elif mnemnonic[0] == 'addw':

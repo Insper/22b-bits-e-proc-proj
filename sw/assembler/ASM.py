@@ -16,13 +16,13 @@ class ASM:
 
     # DONE
     def run(self):
-        #try:
+        try:
             self.fillSymbolTable()
             self.generateMachineCode()
             return 0
-        # except:
-        #     print(f"--> ERRO AO TRADUZIR: {self.parser.currentLine}")
-        #     return -1
+        except:
+            print(f"--> ERRO AO TRADUZIR: {self.parser.currentLine}")
+            return -1
 
     # TODO
     def fillSymbolTable(self):

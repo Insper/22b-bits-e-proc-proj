@@ -27,7 +27,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ------------- Tests ----------------
-      # - name: test ASMsymbolTable
-      #   run: |
-      #     pytest sw/assembler/pytest
+      ------------- Tests ----------------
+      - name: test ASMsymbolTable
+        run: |
+          pytest sw/assembler/pytest -k test_symboltable
+
+      - name: test ASMparser
+        run: |
+          pytest sw/assembler/pytest -k test_asmparser
+      
+      - name: test ASMcode
+        run: |
+          pytest sw/assembler/pytest -k test_asmcode
+
+      - name: test ASM
+        run: |
+          pytest sw/assembler/pytest -k test_asm

@@ -57,21 +57,15 @@ class ASM:
         self.parser.currentCommand = ''
         self.parser.file = open('test_assets/factorial.nasm', 'r')
 
-        print('AAAAAAAAAAAAAAAAAAAAA \n' + str(self.parser.currentCommand))
-        print('AAAAAAAAAAAAAAAAAAAAA \n' + str(self.parser.lineNumber))
-
         while self.parser.advanced():
-            print('BBBBBBBBBBBBBBBBBBBBB')
             cmnd = self.parser.currentCommand[0]
 
             if self.parser.commandType() == "A_COMMAND":
                 symbol = self.parser.symbol()
-                print(self.symbolTable.table)
                 try:
                     symbol = int(symbol)
                 except:
                     symbol = self.symbolTable.getAddress(symbol)
-                print(symbol)
                 
                 bin = '00' + self.code.toBinary(symbol)
                 string = str(bin + "\n")
@@ -83,11 +77,10 @@ class ASM:
             elif self.parser.commandType() == "L_COMMAND":
                 pass # for tags
 
-            elif [0] == 'j':
+            elif self.parser.command()[0][0] == 'j':
                 bin = '100000011000000' + self.code.jump(self.parser.command())
             
             elif self.parser.commandType() == "C_COMMAND":
-                print('aaaaaaaaaa', self.parser.symbol(), 'aaaaaaaaaa')
                 bin = "1000" + self.code.comp(self.parser.command()) + '0' + self.code.dest(self.parser.symbol()) + '000'
                 string = str(bin + "\n")
                 allStrings += string

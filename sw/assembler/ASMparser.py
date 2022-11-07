@@ -40,7 +40,6 @@ class Parser:
         
         linha_final = []
         for linha in self.file:
-            print(linha)
             linha = linha[0:].split()
             if linha != []:
                 if linha[0] != ";":
@@ -90,7 +89,6 @@ class Parser:
         """
 
         # analise o self.currentCommand
-        print(self.currentCommand)
         return self.currentCommand[1][1:]
 
     # TODO

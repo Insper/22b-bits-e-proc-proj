@@ -37,17 +37,26 @@ class Parser:
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        self.currentCommand = []
+        linha_final = []
         for linha in self.file:
             linha = linha.split()
             if linha != []:
                 if linha[0] != ";":
-                        for comando in linha:
+                    #print(linha)
+                    self.currentLine = linha
+                    notAcomment = True
+                    for comando in linha:
+                        
+                        if notAcomment:
                             if comando[-1] == ',':
                                 comando = comando[:-1]
-                            self.currentCommand.append(comando)
+                            if comando[0] == ';': 
+                                notAcomment = False
+                            else:
+                                linha_final.append(comando)
 
-                        return True
+                    self.currentCommand = linha_final
+                    return True
         return False
 
     # TODO
@@ -60,9 +69,10 @@ class Parser:
         @param  self.currentCommand
         @return o tipo da instrução.
         """
-        if self.currentCommand[0] == 'leaw':
+        cmnd = self.currentCommand[0]
+        if cmnd == 'leaw':
             return self.CommandType['A']
-        elif self.currentCommand[0][-1] == ':':
+        elif cmnd[-1] == ':':
             return self.CommandType['L']
         else:
             return self.CommandType['C']

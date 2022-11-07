@@ -6,8 +6,8 @@
 ; Calcula o fatorial do número em R0 e armazena o valor em R1.
 
 
-leaw $1, %A
-movw $0, (%A) ;ter certeza que a RAM[1] começa com 0.
+leaw $1, %A ;ter certeza que a RAM[1] começa com 0.
+movw $0, (%A) 
 
 leaw $0, %A
 movw (%A), %D

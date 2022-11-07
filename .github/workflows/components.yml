@@ -28,6 +28,6 @@ jobs:
           pip install -r requirements.txt
 
       # ------------- Tests ----------------
-      - name: test ASMsymbolTable
-        run: |
-          pytest sw/assembler/test_symboltable.py 
+      # - name: test ASMsymbolTable
+      #   run: |
+      #     pytest sw/assembler/pytest

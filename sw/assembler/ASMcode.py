@@ -35,7 +35,6 @@ class Code:
         # dict_n = {'notw':'!','negw':'-','incw':'+$1','decw':'-$1',}
         if mnemnonic[0][0] == 'j':
             return '0001100'
-        
         else:
             n = mnemnonic[1]
             if mnemnonic[0] == 'notw':

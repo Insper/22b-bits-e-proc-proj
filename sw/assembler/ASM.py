@@ -16,13 +16,13 @@ class ASM:
 
     # DONE
     def run(self):
-        try:
-            self.generateMachineCode()
+        #try:
             self.fillSymbolTable()
+            self.generateMachineCode()
             return 0
-        except:
-            print(f"--> ERRO AO TRADUZIR: {self.parser.currentLine}")
-            return -1
+        # except:
+        #     print(f"--> ERRO AO TRADUZIR: {self.parser.currentLine}")
+        #     return -1
 
     # TODO
     def fillSymbolTable(self):
@@ -34,13 +34,12 @@ class ASM:
         Dependencia : Parser, SymbolTable
         """
         self.hackLineCount = 0
-        for lines in self.parser.file:
-            if self.parser.advanced():
-                if self.parser.commandType() == 'L_COMMAND':
-                    if not self.symbolTable.contains(self.parser.label()):
-                        self.symbolTable.addEntry(self.parser.label(), self.hackLineCount)
-                else:
-                    self.hackLineCount += 1
+        while self.parser.advanced():
+            if self.parser.commandType() == 'L_COMMAND':
+                if not self.symbolTable.contains(self.parser.label()):
+                    self.symbolTable.addEntry(self.parser.label(), self.hackLineCount)
+            else:
+                self.hackLineCount += 1
 
 
     # TODO
@@ -54,28 +53,47 @@ class ASM:
         """
         allStrings = ''
         string = ''
-        for lines in self.parser.file:
-            if self.parser.advanced():
-                cmnd = self.parser.currentCommand[0]
+        self.parser.lineNumber = 0
+        self.parser.currentCommand = ''
+        self.parser.file = open('test_assets/factorial.nasm', 'r')
 
-                if self.parser.commandType() == "A_COMMAND":
-                    bin = "0000" + '0' + '001100' + '0' + '000' +self.code.jump(self.parser.command())
-                    string = str(bin + "\n")
-                    allStrings += string
+        print('AAAAAAAAAAAAAAAAAAAAA \n' + str(self.parser.currentCommand))
+        print('AAAAAAAAAAAAAAAAAAAAA \n' + str(self.parser.lineNumber))
 
-                elif cmnd == 'nop':
-                    allStrings += '000000000000000000 \n'
-                    
-                elif cmnd[-1] == ':':
-                    pass # for tags
+        while self.parser.advanced():
+            print('BBBBBBBBBBBBBBBBBBBBB')
+            cmnd = self.parser.currentCommand[0]
+
+            if self.parser.commandType() == "A_COMMAND":
+                symbol = self.parser.symbol()
+                print(self.symbolTable.table)
+                try:
+                    symbol = int(symbol)
+                except:
+                    symbol = self.symbolTable.getAddress(symbol)
+                print(symbol)
                 
-                elif self.parser.commandType() == "C_COMMAND":
-                    bin = "1000" + self.code.comp(self.parser.symbol()) + '0' + self.code.dest(self.parser.symbol()) + self.code.jump(self.parser.command())
-                    string = str(bin + "\n")
-                    allStrings += string
+                bin = '00' + self.code.toBinary(symbol)
+                string = str(bin + "\n")
+                allStrings += string
 
-                else: 
-                    allStrings += f'{self.parser.command()} <------------- erro \n'
+            elif cmnd == 'nop':
+                allStrings += '000000000000000000 \n'
+                
+            elif self.parser.commandType() == "L_COMMAND":
+                pass # for tags
+
+            elif [0] == 'j':
+                bin = '100000011000000' + self.code.jump(self.parser.command())
+            
+            elif self.parser.commandType() == "C_COMMAND":
+                print('aaaaaaaaaa', self.parser.symbol(), 'aaaaaaaaaa')
+                bin = "1000" + self.code.comp(self.parser.command()) + '0' + self.code.dest(self.parser.symbol()) + '000'
+                string = str(bin + "\n")
+                allStrings += string
+
+            else: 
+                allStrings += f'{self.parser.command()} <------------- erro \n'
                     
         self.hack.write(allStrings)
             

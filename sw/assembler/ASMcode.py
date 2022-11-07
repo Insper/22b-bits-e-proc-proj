@@ -35,6 +35,30 @@ class Code:
         # dict_n = {'notw':'!','negw':'-','incw':'+$1','decw':'-$1',}
         if mnemnonic[0][0] == 'j':
             return '0001100'
+        else:
+            n = mnemnonic[1]
+            if mnemnonic[0] == 'notw':
+                n = '!'+mnemnonic[1]
+            elif mnemnonic[0] == 'negw':
+                n = '-'+mnemnonic[1]
+            elif mnemnonic[0] == 'incw':
+                n = mnemnonic[1]+'+$1'
+            elif mnemnonic[0] == 'decw':
+                n = mnemnonic[1]+'-$1'
+            elif mnemnonic[0] == 'subw':
+                n = mnemnonic[1]+'-'+mnemnonic[2]
+            elif mnemnonic[0] == 'rsubw':
+                n = mnemnonic[2]+'-'+mnemnonic[1]
+            elif mnemnonic[0] == 'addw':
+                n = mnemnonic[1]+'+'+mnemnonic[2]
+            elif mnemnonic[0] == 'andw':
+                n = '&'
+            elif mnemnonic[0] == 'orw':
+                n = '|'
+
+            if '(' in mnemnonic[1] or (len(mnemnonic)>3 and '(' in mnemnonic[2]):
+                return '1'+dict_comp[n]
+            return '0'+dict_comp[n]
 
     # TODO
     def jump(self, mnemnonic):

@@ -8,7 +8,7 @@ class Parser:
         self.lineNumber = 0  # linha atual do arquivo (nao do codigo gerado)
         self.currentCommand = ""  # comando atual
         self.currentLine = ""  # linha de codigo atual
-        self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND", "J": "J_COMMAND"}
+        self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND"}
 
     # DONE
     def openFile(self):
@@ -37,8 +37,10 @@ class Parser:
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
+        
         linha_final = []
         for linha in self.file:
+            print(linha)
             linha = linha[0:].split()
             if linha != []:
                 if linha[0] != ";":
@@ -72,8 +74,6 @@ class Parser:
         cmnd = self.currentCommand[0]
         if cmnd == 'leaw':
             return self.CommandType['A']
-        elif cmnd[0] == 'j':
-            return self.CommandType['J']
         elif cmnd[-1] == ':':
             return self.CommandType['L']
         else:
@@ -90,6 +90,7 @@ class Parser:
         """
 
         # analise o self.currentCommand
+        print(self.currentCommand)
         return self.currentCommand[1][1:]
 
     # TODO

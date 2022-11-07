@@ -31,16 +31,16 @@ jobs:
       ------------- Tests ----------------
       - name: test ASMsymbolTable
         run: |
-          pytest sw/assembler/pytest -k test_symboltable
+          pytest sw/assembler/pytest test_symboltable
 
       - name: test ASMparser
         run: |
-          pytest sw/assembler/pytest -k test_asmparser
+          pytest sw/assembler/pytest test_asmparser
       
       - name: test ASMcode
         run: |
-          pytest sw/assembler/pytest -k test_asmcode
+          pytest sw/assembler/pytest test_asmcode
 
       - name: test ASM
         run: |
-          pytest sw/assembler/pytest -k test_asm
+          pytest sw/assembler/pytest test_asm

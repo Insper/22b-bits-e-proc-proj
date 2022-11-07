@@ -53,9 +53,7 @@ class ASM:
         """
         allStrings = ''
         string = ''
-        self.parser.lineNumber = 0
-        self.parser.currentCommand = ''
-        self.parser.file = open('test_assets/factorial.nasm', 'r')
+        self.parser.reset()
 
         while self.parser.advanced():
             cmnd = self.parser.currentCommand[0]

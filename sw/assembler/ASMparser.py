@@ -6,12 +6,12 @@ class Parser:
     def __init__(self, inputFile):
         self.file = inputFile  # self.openFile()  # arquivo de leitura
         # asm_parser
-        self.lineNumber = 0
         r = 0  # linha atual do arquivo (nao do codigo gerado)
 
         self.lineNumber = 0  # linha atual do arquivo (nao do codigo gerado)
         self.currentCommand = ""  # comando atual
         self.currentLine = ""  # linha de codigo atual
+        self.menos = 0
         self.CommandType = {"A": "A_COMMAND", "C": "C_COMMAND", "L": "L_COMMAND"}
 
     # DONE
@@ -37,12 +37,24 @@ class Parser:
         entrada o método retorna "Falso", senão retorna "Verdadeiro".
         @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
         """
-
     
         arquivo = self.file
         line = arquivo.readline()
+
+        while ";" in line or line == "\n" or line[-1:] == ':':
+            if len(line) > 0:
+                if line.replace(' ', '')[0] == ';':
+                    self.menos += 1
+            if line == '\n':
+                self.menos += 1
+            if line[-1:] == ':':
+                self.menos += 1
+            self.currentLine = self.lineNumber
+            self.currentCommand = line
+            self.lineNumber+=1
        
-        while ";" in line or line == "\n":
+
+
             line = arquivo.readline()
 
 
@@ -51,7 +63,6 @@ class Parser:
         line = line.split()
 
             
-
         self.currentLine = self.lineNumber
         self.currentCommand = line
         self.lineNumber+=1

@@ -9,12 +9,14 @@ def test_advanced():
 
     assert ptest.advanced() is True
     assert ptest.command() == ['leaw', '$3', '%A']
+    # print(ptest.to_fill())
 
     assert ptest.advanced() is True
     assert ptest.command() == ['movw', '$0', '(%A)']
 
     assert ptest.advanced() is True
     assert ptest.command() == ['loop:']
+    # print(ptest.to_fill())
 
     assert ptest.advanced() is True
     assert ptest.command() == ['leaw', '$0', '%A']

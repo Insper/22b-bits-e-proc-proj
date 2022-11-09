@@ -1,6 +1,6 @@
-from .ASMsymbolTable import SymbolTable
-from .ASMcode import Code
-from .ASMparser import Parser
+from ASMsymbolTable import SymbolTable
+from ASMcode import Code
+from ASMparser import Parser
 
 
 class ASM:
@@ -13,6 +13,7 @@ class ASM:
         self.parser = Parser(nasm)
         self.code = Code()
         self.hackLineCount = 0
+        self.last_jump = 0
 
     # DONE
     def run(self):
@@ -24,7 +25,6 @@ class ASM:
             print(f"--> ERRO AO TRADUZIR: {self.parser.currentLine}")
             return -1
 
-    # TODO
     def fillSymbolTable(self):
         """
         primeiro passo para a construção da tabela de símbolos de marcadores (labels)
@@ -42,7 +42,6 @@ class ASM:
                 self.hackLineCount += 1
 
 
-    # TODO
     def generateMachineCode(self):
         """
         Segundo passo para a geração do código de máquina
@@ -57,6 +56,13 @@ class ASM:
 
         while self.parser.advanced():
             cmnd = self.parser.currentCommand[0]
+
+            if self.last_jump:
+                if cmnd != 'nop':
+                    print(f"--> ERRO, JUMP NÃO SEGUIDO DE NOP")
+                    raise ValueError('Jump não seguido de nop')
+                else:
+                    self.last_jump = 0
 
             if self.parser.commandType() == "A_COMMAND":
                 symbol = self.parser.symbol()
@@ -79,6 +85,7 @@ class ASM:
                 bin = '100000011000000' + self.code.jump(self.parser.currentCommand)
                 string = str(bin + "\n")
                 allStrings += string
+                self.last_jump = 1
             
             elif self.parser.commandType() == "C_COMMAND":
                 bin = "1000" + self.code.comp(self.parser.command()) + '0' + self.code.dest(self.parser.currentCommand) + '000'

@@ -33,9 +33,12 @@ class ASM:
         """
         self.parser.reset()
         dict_entradas = {}
+        contador = 0
         while self.parser.advanced() == True:
             if ':' in self.parser.command()[0]:
-                dict_entradas[self.parser.command()[0][:-1]] = self.parser.currentLine
+                contador += 1
+
+                dict_entradas[self.parser.command()[0][:-1]] = self.parser.currentLine - contador
 
         for key,value in dict_entradas.items():
             self.symbolTable.addEntry(key,value)

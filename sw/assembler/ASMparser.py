@@ -40,28 +40,21 @@ class Parser:
     
         arquivo = self.file
         line = arquivo.readline()
+        if self.lineNumber == 0 :
+            self.lineNumber += 1 
 
-        while ";" in line or line == "\n" or line[-1:] == ':':
-            if len(line) > 0:
-                if line.replace(' ', '')[0] == ';':
-                    self.menos += 1
-            if line == '\n':
-                self.menos += 1
-            if line[-1:] == ':':
-                self.menos += 1
-            self.currentLine = self.lineNumber
-            self.currentCommand = line
-            self.lineNumber+=1
-       
-
-
+        while ";" in line or line == "\n":
+            if len(line) > 1:
+                if line.replace(' ', '')[0] != ';':
+        
+                    self.currentLine = self.lineNumber
+                    self.lineNumber+=1
+                    
             line = arquivo.readline()
-
 
         line = line.strip()
         line = line.replace(',', '')
         line = line.split()
-
             
         self.currentLine = self.lineNumber
         self.currentCommand = line

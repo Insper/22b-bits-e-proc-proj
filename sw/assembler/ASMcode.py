@@ -37,6 +37,14 @@ class Code:
                 bits = '001'
             elif mnemnonic[-1] == "(%A)" :
                 bits = '100'
+        elif len(mnemnonic) == 4:
+            if mnemnonic[-1] == "%D" :
+                bits = '010'
+            elif mnemnonic[-1] == "%A" :
+                bits = '001'
+            elif mnemnonic[-1] == "(%A)" :
+                bits = '100'
+
         else : 
             if mnemnonic[-2] == '%D' and mnemnonic[-1] == '(%A)' :
                 bits = '110'

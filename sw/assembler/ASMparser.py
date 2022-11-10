@@ -87,8 +87,11 @@ class Parser:
         if 'leaw' == self.currentCommand[0]:
             
             return self.CommandType['A']
+
         elif self.currentCommand[0].isupper():
+
             return self.CommandType['L']
+            
         else :
             return self.CommandType['C']
 

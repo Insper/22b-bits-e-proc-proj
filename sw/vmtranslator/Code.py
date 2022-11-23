@@ -59,31 +59,45 @@ class Code:
         if bootstrap or isDir:
             self.commandsToFile(commands)
 
-    # TODO
+    # DONE
     def writeLabel(self, label):
         commands = []
         commands.append(self.writeHead("label") + " " + label)
 
-        # TODO ...
+        commands.append(label + ":")
+
         self.commandsToFile(commands)
 
-    # TODO
+    # DONE
     def writeGoto(self, label):
         commands = []
         commands.append(self.writeHead("goto") + " " + label)
 
-        # TODO ...
+        commands.append(f"leaw ${label}, %A")
+        commands.append(f"jmp")
+        commands.append(f"nop")
+
         self.commandsToFile(commands)
 
-    # TODO
+    # DONE
     def writeIf(self, label):
-        commands.append(self.writeHead("if") + " " + label)
         commands = []
+        commands.append(self.writeHead("if") + " " + label)
 
-        # TODO ...
+        commands.append(f"leaw $SP, %A") # pegar um antes, SP tá no vazio em cima do stack.
+        commands.append(f"subw (%A), $1, %D") # armazena a booleana em D, false == 000000000
+        commands.append('movw %D, (%A)')
+        commands.append('movw %D, %A')
+        commands.append('movw (%A), %D')
+        commands.append(f"notw %D") # id D == 0000000 , ent jmp
+
+        commands.append(f"leaw ${label}, %A")
+        commands.append(f"je")
+        commands.append(f"nop")
+        
         self.commandsToFile(commands)
 
-    # TODO
+    # DONE
     def writeArithmetic(self, command):
         self.updateUniqLabel()
         if len(command) < 2:
@@ -92,29 +106,203 @@ class Code:
         commands.append(self.writeHead(command))
 
         if command == "add":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("addw (%A), %D, %D")
+            commands.append("movw %D, (%A)")
+            commands.append("incw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "sub":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("subw (%A), %D, %D")
+            commands.append("movw %D, (%A)")
+            commands.append("incw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "or":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("orw (%A), %D, %D")
+            commands.append("movw %D, (%A)")
+            commands.append("incw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "and":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("andw (%A), %D, %D")
+            commands.append("movw %D, (%A)")
+            commands.append("incw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "not":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("notw %D")
+            commands.append("movw %D, (%A)")
         elif command == "neg":
-            pass # TODO
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("negw %D")
+            commands.append("movw %D, (%A)")
         elif command == "eq":
             # dica, usar self.getUniqLabel() para obter um label único
-            pass # TODO
+            label1 = self.getUniqLabel()
+            self.updateUniqLabel()
+            label2 = self.getUniqLabel()
+
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("subw (%A), %D, %D")
+            commands.append(f"leaw ${label1}, %A")
+            commands.append("je")
+            commands.append("nop")
+
+            commands.append("leaw $0, %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            commands.append(f"leaw ${label2}, %A")
+            commands.append("jmp")
+            commands.append("nop")
+
+            commands.append(f"{label1}:") # SÃO IGUAIS
+            commands.append("leaw $0, %A")
+            commands.append("notw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            
+            commands.append(f"{label2}:")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "gt":
             # dica, usar self.getUniqLabel() para obter um label único
-            pass # TODO
+            label1 = self.getUniqLabel()
+            self.updateUniqLabel()
+            label2 = self.getUniqLabel()
+
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("subw (%A), %D, %D")
+            commands.append(f"leaw ${label1}, %A")
+            commands.append("jg")
+            commands.append("nop")
+
+            commands.append("leaw $0, %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            commands.append(f"leaw ${label2}, %A")
+            commands.append("jmp")
+            commands.append("nop")
+
+            commands.append(f"{label1}:")
+            commands.append("leaw $0, %A")
+            commands.append("notw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            
+            commands.append(f"{label2}:")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
         elif command == "lt":
             # dica, usar self.getUniqLabel() para obter um label único
-            pass # TODO
+            label1 = self.getUniqLabel()
+            self.updateUniqLabel()
+            label2 = self.getUniqLabel()
+
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw (%A), %D")
+            commands.append("decw %A")
+            commands.append("subw (%A), %D, %D")
+            commands.append(f"leaw ${label1}, %A")
+            commands.append("jl")
+            commands.append("nop")
+
+            commands.append("leaw $0, %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            commands.append(f"leaw ${label2}, %A")
+            commands.append("jmp")
+            commands.append("nop")
+
+            commands.append(f"{label1}:")
+            commands.append("leaw $0, %A")
+            commands.append("notw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("decw %A")
+            commands.append("movw %D, (%A)")
+            
+            commands.append(f"{label2}:")
+            commands.append("leaw $SP, %A")
+            commands.append("movw (%A), %A")
+            commands.append("decw %A")
+            commands.append("movw %A, %D")
+            commands.append("leaw $SP, %A")
+            commands.append("movw %D, (%A)")
 
         self.commandsToFile(commands)
 
+    # DONE
     def writePop(self, command, segment, index):
         self.updateUniqLabel()
         commands = []
@@ -123,24 +311,105 @@ class Code:
         if segment == "" or segment == "constant":
             return False
         elif segment == "local":
-            # dica: usar o argumento index (push local 1)
-            pass # TODO
+
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $LCL, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "argument":
-            pass # TODO
+
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $ARG, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "this":
-            pass # TODO
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $THIS, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
         elif segment == "that":
-            pass # TODO
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $THAT, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
         elif segment == "temp":
-            # dica: usar o argumento index (push temp 0)
-            pass # TODO
+
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $5, %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "static":
-            pass # TODO
+
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $16, %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "pointer":
-            pass # TODO
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %A')
+            commands.append('movw (%A), %D')
+            if index == 0:
+                commands.append('leaw $THIS, %A')
+            else:
+                commands.append('leaw $THAT, %A')
+            commands.append('movw %D, (%A)')
+            commands.append('leaw $SP, %A')
+            commands.append('subw (%A), $1, %D')
+            commands.append('movw %D, (%A)')
 
         self.commandsToFile(commands)
 
+    # DONE
     def writePush(self, command, segment, index):
         commands = []
         commands.append(self.writeHead(command + " " + segment + " " + str(index)))
@@ -148,23 +417,124 @@ class Code:
         if segment == "constant":
             # dica: usar index para saber o valor da consante
             # push constant index
-            pass # TODO
+            commands.append('leaw $' + str(index) + ', %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "local":
-            pass # TODO
+            commands.append('leaw $LCL, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "argument":
-            pass # TODO
+            commands.append('leaw $ARG, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "this":
-            pass # TODO
+            commands.append('leaw $THIS, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "that":
-            pass # TODO
+            commands.append('leaw $THAT, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "argument":
-            pass # TODO
+            commands.append('leaw $ARG, %A')
+            commands.append('movw (%A), %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "static":
-            pass # TODO
+            commands.append('leaw $16, %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "temp":
-            pass # TODO
+            commands.append('leaw $5, %A')
+            if index != 0:
+                for _ in range(index):
+                    commands.append('incw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
         elif segment == "pointer":
-            pass # TODO
+            if index == 0:
+                commands.append('leaw $THIS, %A')
+            else:
+                commands.append('leaw $THAT, %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+            commands.append('incw %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw %D, (%A)')
 
         self.commandsToFile(commands)
 
@@ -172,9 +542,86 @@ class Code:
     def writeCall(self, funcName, numArgs):
         commands = []
         commands.append(self.writeHead("call") + " " + funcName + " " + str(numArgs))
+        self.updateUniqLabel()
+        labelReturn = self.getUniqLabel()
+        self.updateUniqLabel()
 
-        # TODO
-        # ...
+        # coloca a label return no topo da pilha, começando a criar o frame
+        commands.append(f'leaw ${labelReturn}, %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # coloca o local no frame
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)') # salva como novo SP
+        commands.append('leaw $LCL, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # coloca o argument no frame
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)') # salva como novo SP
+        commands.append('leaw $ARG, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # coloca o this no frame
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)') # salva como novo SP
+        commands.append('leaw $THIS, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # coloca o that no frame
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)') # salva como novo SP
+        commands.append('leaw $THAT, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza o novo local
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $LCL, %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza o SP
+        commands.append(f'leaw $SP, %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza o novo argument
+        commands.append('leaw $5, %A')
+        commands.append('subw %D, %A, %D')
+        commands.append(f'leaw ${numArgs}, %A')
+        commands.append('subw %D, %A, %D')
+        commands.append('leaw $ARG, %A')
+        commands.append('movw %D, (%A)')
+
+        # salta para a função
+        commands.append(f'leaw ${funcName}, %A')
+        commands.append('jmp')
+        commands.append('nop')
+
+
+        commands.append(f'{labelReturn}:')
 
         self.commandsToFile(commands)
 
@@ -183,8 +630,72 @@ class Code:
         commands = []
         commands.append(self.writeHead("return"))
 
-        # TODO
-        # ...
+        # joga o resultado no lugar do primeiro arg
+        commands.append('leaw $SP, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $ARG, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza o SP
+        commands.append('incw %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza de volta o THAT
+        commands.append('leaw $LCL, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $THAT, %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza de volta o THIS
+        commands.append('leaw $LCL, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('decw %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $THIS, %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza de volta o ARG
+        commands.append('leaw $LCL, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('decw %A')
+        commands.append('decw %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $ARG, %A')
+        commands.append('movw %D, (%A)')
+
+        # pega a label de return e coloca onde o SP aponta
+        commands.append('leaw $LCL, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $4, %A')
+        commands.append('subw %D, %A, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw %D, (%A)')
+
+        # atualiza de volta o LCL
+        commands.append('leaw $LCL, %A')
+        commands.append('subw (%A), $1, %A')
+        commands.append('movw %A, %D')
+        commands.append('leaw $3, %A')
+        commands.append('subw %D, %A, %A')
+        commands.append('movw (%A), %D')
+        commands.append('leaw $LCL, %A')
+        commands.append('movw %D, (%A)')
+
+        # salta para o lugar de retorno
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %A')
+        commands.append('movw (%A), %A')
+        commands.append('jmp')
+        commands.append('nop')
+
 
         self.commandsToFile(commands)
 
@@ -193,7 +704,14 @@ class Code:
         commands = []
         commands.append(self.writeHead("func") + " " + funcName + " " + str(numLocals))
 
-        # TODO
-        # ...
+        commands.append(f'{funcName}:')
+
+        #atualiza o novo SP, reservando espaço para as variáveis locais
+        commands.append('leaw $SP, %A')
+        commands.append('movw (%A), %D')
+        commands.append(f'leaw ${numLocals}, %A')
+        commands.append('addw %D, %A, %D')
+        commands.append('leaw $SP, %A')
+        commands.append('movw %D, (%A)')
 
         self.commandsToFile(commands)

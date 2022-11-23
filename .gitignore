@@ -7,3 +7,7 @@ htmlcov
 *.v
 .direnv/
 *.ini
+env
+.env
+env_bits
+ambiente_virtual

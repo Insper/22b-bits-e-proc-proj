@@ -5,3 +5,16 @@
 ;
 ; Faça os LEDs exibirem 
 ; LED = ON ON ON ON ON !SW3 !SW2 !SW1 0
+
+leaw $21185, %A
+movw (%A), %D 
+notw %D 
+
+leaw $496, %A
+orw %D, %A, %D
+
+leaw $510, %A
+andw %D,%A, %D
+
+leaw $21184
+movw %D, (%A)

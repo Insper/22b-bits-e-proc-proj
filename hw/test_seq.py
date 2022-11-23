@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from myhdl import *
-from .sequencial import *
+from .seq import *
 import random
 
 random.seed(5)
@@ -64,6 +64,7 @@ def test_pc():
             assert output == 0
 
         inc.next = 1
+        print("Primeiro Print:", inc, load, i, output, WIDTH, clk, rst)
         for n in range(10):
             yield clk.negedge
             assert output == n + 1

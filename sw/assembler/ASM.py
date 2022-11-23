@@ -32,6 +32,18 @@ class ASM:
         Dependencia : Parser, SymbolTable
         """
         self.parser.reset()
+        dict_entradas = {}
+        contador = 0
+        while self.parser.advanced() == True:
+            if ':' in self.parser.command()[0]:
+                contador += 1
+
+                dict_entradas[self.parser.command()[0][:-1]] = self.parser.currentLine - contador
+
+        for key,value in dict_entradas.items():
+            self.symbolTable.addEntry(key,value)
+        
+
 
     # TODO
     def generateMachineCode(self):
@@ -42,11 +54,39 @@ class ASM:
 
         Dependencias : Parser, Code, fillSymbolTable
         """
+        bin = ''
+        self.parser.lineNumber = 0
+        self.parser.currentCommand = ''
+        self.parser.file=open('test_assets/factorial.nasm', 'r')
 
         while self.parser.advanced():
-            if self.parser.commandType() == "C_COMMAND":
-                bin = ""
+            
+            comando_atual = self.parser.currentCommand
+            if self.parser.commandType() == "L_COMMAND":
+                pass
+
+            elif self.parser.commandType() == "C_COMMAND":
+
+                if comando_atual[0][0] == "j" :
+
+                    bin = "100000011000000"+self.code.jump(comando_atual)
+
+                elif comando_atual[0] == 'nop':
+
+                    bin = '100001010100000000'
+
+                else :
+                    bin = '1000'+self.code.comp(comando_atual)+'0'+self.code.dest(comando_atual)+self.code.jump(comando_atual)
+
                 self.hack.write(bin + "\n")
+                
+
             elif self.parser.commandType() == "A_COMMAND":
-                bin = ""
+
+                endereco = self.symbolTable.getAddress(self.parser.symbol())
+                if endereco == None :
+                    bin = "00"+self.code.toBinary(self.parser.symbol())
+                else :
+                    bin = "00"+self.code.toBinary(endereco)
+
                 self.hack.write(bin + "\n")

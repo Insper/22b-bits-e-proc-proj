@@ -80,17 +80,17 @@ def test_div():
 
     ram = {0: 1023, 1: 7}
     tst = {2: 146}
-    assert nasm_test("div.nasm", ram, tst, 10000)
+    assert nasm_test("div.nasm", ram, tst, 15000)
 
 
 def test_isEven():
     ram = {0: 2, 5: 64}
     tst = {0: 1}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst, 10000)
 
     ram = {0: 2, 5: 1023}
     tst = {0: 0}
-    assert nasm_test("isEven.nasm", ram, tst)
+    assert nasm_test("isEven.nasm", ram, tst, 100000)
 
 
 def test_pow():
@@ -144,10 +144,63 @@ def test_factorial():
     tst = {1: math.factorial(ram[0])}
     assert nasm_test("factorial.nasm", ram, tst, 10000)
 
-    ram = {1: 0}
+    ram = {0: 1}
     tst = {1: math.factorial(ram[0])}
     assert nasm_test("factorial.nasm", ram, tst, 10000)
 
-    ram = {1: 4}
+    ram = {0: 4}
     tst = {1: math.factorial(ram[0])}
     assert nasm_test("factorial.nasm", ram, tst, 10000)
+
+def test_matrizdeterminante():
+    ram = {1000: 3, 1001: 3, 1003:2, 1004:3}
+    tst = {0: 3}
+    assert nasm_test("matrizDeterminante.nasm", ram, tst, 10000)
+
+    ram = {1000: 5, 1001: 3, 1003:2, 1004:3}
+    tst = {0: 9}
+    assert nasm_test("matrizDeterminante.nasm", ram, tst, 10000)
+
+def test_sweled():
+    ram = {21185: 14}
+    tst = {21185: 14, 21184: 496}
+    assert nasm_test("SWeLED.nasm", ram, tst, 10000)
+
+    ram = {21185: 6}
+    tst = {21185: 6, 21184: 504}
+    assert nasm_test("SWeLED.nasm", ram, tst, 10000)
+
+    ram = {21185: 2}
+    tst = {21185: 2, 21184: 508}
+    assert nasm_test("SWeLED.nasm", ram, tst, 10000)
+
+def test_mult2():
+    ram = {5: 64}
+    tst = {0: 1}
+    assert nasm_test("multiploDeDois.nasm", ram, tst, 10000)
+
+    ram = {5: 1023}
+    tst = {0: 0}
+    assert nasm_test("multiploDeDois.nasm", ram, tst, 100000)
+
+def test_sweled2():
+    ram = {}
+    tst = {21184: 180}
+    assert nasm_test("SWeLED2.nasm", ram, tst, 10000)
+
+    ram = {5:8, 21185:257}
+    tst = {21185:257, 21184: 446}
+    assert nasm_test("SWeLED2.nasm", ram, tst, 10000)
+
+def test_vectorMean():
+    ram = {4:4,5:1,6:2,7:1,8:4}
+    tst = {0:2,1:8}
+    assert nasm_test("vectorMean.nasm", ram, tst, 10000)
+
+    ram = {4:4,5:1,6:2,7:3,8:4}
+    tst = {0:2,1:10}
+    assert nasm_test("vectorMean.nasm", ram, tst, 10000)
+
+    ram = {4:5,5:1,6:1,7:1,8:1,9:1}
+    tst = {0:1,1:5}
+    assert nasm_test("vectorMean.nasm", ram, tst, 10000)

@@ -1,22 +1,28 @@
+# bits-e-proc-GrupoEmbasbacado
 Nome-Grupo: "GrupoEmbasbacado"
 
-- user: 1
+Grupo: <br>
   name: Eduardo Mendes Vaz
   git-username: EduardoMVAz
   blackboard-username: eduardov1
 
-- user: 2
   name: Pedro Vaz de Moraes Pertusi
   git-username: PedroPertusi
   blackboard-username: pedrovmp
  
- - user: 3
   name: João Alfredo Cardoso Lamy
   git-username: alfredjynx
   blackboard-username: joaoacl
   
-- user: 4
   name: Julia Karine Peres
   git-username: juliakp1
   blackboard-username: juliakp1
-
+  
+  # Link do Vídeo - Conceito A <br>
+  https://youtube.com/shorts/8cbo1DRwmQ4?feature=share
+  
+  # Link do Vídeo - ULA PROJETO 2 <br>
+  https://youtu.be/FFwDtIYD0vU
+  
+  # Link do Vídeo - Projeto 3 - Lógica Sequencial <br>
+  https://youtu.be/Hs6h9iG8dUY

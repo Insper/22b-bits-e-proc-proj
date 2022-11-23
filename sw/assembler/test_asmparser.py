@@ -56,6 +56,28 @@ def test_commandType():
     ptest.currentCommand = ['rsubw', '%D', '%A', '%D']
     assert ptest.commandType() == ptest.CommandType['C']
 
+    ptest.currentCommand = ['negw', '%D']
+    assert ptest.commandType() == ptest.CommandType['C']
+
+    ptest.currentCommand = ['subw', '%D', '%A', '(%A)']
+    assert ptest.commandType() == ptest.CommandType['C']
+
+    ptest.currentCommand = ['addw', '%D', '%A', '(%A)']
+    assert ptest.commandType() == ptest.CommandType['C']
+
+    ptest.currentCommand = ['movw', '$1', '%D']
+    assert ptest.commandType() == ptest.CommandType['C']
+
+    ptest.currentCommand = ['leaw', '$4567', '%A']
+    assert ptest.commandType() == ptest.CommandType['A']
+
+    ptest.currentCommand = ['movw', '$0', '%A']
+    assert ptest.commandType() == ptest.CommandType['C']
+
+    ptest.currentCommand = ['MENGO:']
+    assert ptest.commandType() == ptest.CommandType['L']
+
+
 
 def test_symbol():
     fnasm = open(SYMBOL_NASM, 'r')

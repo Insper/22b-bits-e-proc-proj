@@ -13,7 +13,7 @@ class Parser:
     # DONE
     def openFile(self):
         try:
-            return open(self.inputFile, "r")
+            return open(self.file, "r")
         except IOError:
             sys.exit("Erro: inputFile not found: {}".format(self.inputFile))
 
@@ -37,7 +37,27 @@ class Parser:
         # você deve varrer self.file (arquivo já aberto) até encontrar: fim de arquivo
         # ou uma nova instrucao
         # self.file
-        pass
+        
+        linha_final = []
+        for linha in self.file:
+            linha = linha.split()
+            if linha != []:
+                if linha[0] != ";":
+                    self.currentLine = linha
+                    notAcomment = True
+                    for comando in linha:
+                        
+                        if notAcomment:
+                            if comando[-1] == ',':
+                                comando = comando[:-1]
+                            if comando[0] == ';': 
+                                notAcomment = False
+                            else:
+                                linha_final.append(comando)
+
+                    self.currentCommand = linha_final
+                    return True
+        return False
 
     # TODO
     def commandType(self):
@@ -49,9 +69,13 @@ class Parser:
         @param  self.currentCommand
         @return o tipo da instrução.
         """
-
-        # analise o self.currentCommand
-        pass
+        cmnd = self.currentCommand[0]
+        if cmnd == 'leaw':
+            return self.CommandType['A']
+        elif cmnd[-1] == ':':
+            return self.CommandType['L']
+        else:
+            return self.CommandType['C']
 
 
     # TODO
@@ -64,7 +88,7 @@ class Parser:
         """
 
         # analise o self.currentCommand
-        pass
+        return self.currentCommand[1][1:]
 
     # TODO
     def label(self):
@@ -75,8 +99,7 @@ class Parser:
         @return o símbolo da instrução (sem os dois pontos).
         """
 
-        # analise o self.currentCommand
-        pass
+        return self.currentCommand[0][0:-1]
 
     # DONE
     def command(self):

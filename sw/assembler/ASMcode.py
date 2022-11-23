@@ -15,7 +15,7 @@ class Code:
         """
         Retorna o código binário do(s) registrador(es) que vão receber o valor da instrução.
         - in mnemnonic: vetor de mnemônicos "instrução" a ser analisada.
-        - return bits: String de 4 bits com código em linguagem de máquina
+        - return bits: String de 3 bits com código em linguagem de máquina
           que define o endereco da operacao
         """
 
@@ -23,7 +23,7 @@ class Code:
             bits = '000'
         elif len(mnemnonic) == 2:
             if mnemnonic[-1] == "%A":
-                bits = '001'
+                bits = '01'
             elif mnemnonic[-1] == "(%A)":
                 bits = '100'
             elif mnemnonic[-1] == "%D":

@@ -266,7 +266,28 @@ class Code:
             commands.append('movw %D, (%A)')
 
         elif segment == "pointer":
-            pass # TODO
+            if index == 0:
+                commands.append("leaw $SP, %A")
+                commands.append("movw (%A), %A")
+                commands.append("decw %A")
+                commands.append("movw (%A), %D")
+                commands.append("leaw $THIS, %A")
+                commands.append("movw %D, (%A)")
+                commands.append("leaw $SP, %A")
+                commands.append("movw (%A), %D")
+                commands.append("decw %D")
+                commands.append("movw %D, (%A)")
+            elif index == 1:
+                commands.append("leaw $SP, %A")
+                commands.append("movw (%A), %A")
+                commands.append("decw %A")
+                commands.append("movw (%A), %D")
+                commands.append("leaw $THAT, %A")
+                commands.append("movw %D, (%A)")
+                commands.append("leaw $SP, %A")
+                commands.append("movw (%A), %D")
+                commands.append("decw %D")
+                commands.append("movw %D, (%A)")
 
         self.commandsToFile(commands)
 

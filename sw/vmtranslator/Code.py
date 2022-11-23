@@ -147,7 +147,29 @@ class Code:
             commands.append('movw %D, (%A)')
 
         elif segment == "argument":
-            pass # TODO
+            commands.append(f'leaw ${index}, %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $ARG, %A')
+            commands.append('movw (%A), %A')
+            commands.append('addw %D, %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('decw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %D')
+            commands.append('decw %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "this":
             commands.append(f'leaw ${index}, %A')
             commands.append('movw %A, %D')
@@ -220,7 +242,29 @@ class Code:
             commands.append('movw %D, (%A)')
 
         elif segment == "static":
-            pass # TODO
+            commands.append(f'leaw ${index}, %A')
+            commands.append('movw %A, %D')
+            commands.append('leaw $STATIC, %A')
+            commands.append('movw (%A), %A')
+            commands.append('addw %D, %A, %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('decw %A')
+            commands.append('movw (%A), %D')
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw (%A), %A')
+            commands.append('movw %D, (%A)')
+
+            commands.append('leaw $SP, %A')
+            commands.append('movw (%A), %D')
+            commands.append('decw %D')
+            commands.append('movw %D, (%A)')
+
         elif segment == "pointer":
             pass # TODO
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from signal import Signals
 from myhdl import *
 
 
@@ -16,7 +17,7 @@ def and16(a, b, q):
 
     @always_comb
     def comb():
-        q.next = foo
+        q.next = a and b
 
     return comb
 

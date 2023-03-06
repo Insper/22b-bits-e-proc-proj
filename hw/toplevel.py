@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from myhdl import *
-
+from ula import ula 
 from components import *
+from ula import *
 
 
 @block

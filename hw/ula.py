@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from operator import concat
+from signal import Signals
 from myhdl import *
 
 
@@ -35,7 +37,10 @@ def ula(x, y, c, zr, ng, saida, width=16):
 def inversor(z, a, y):
     @always_comb
     def comb():
-        pass
+        if z == 1:
+            y.next = ~a
+        else:
+            y.next = a
 
     return instances()
 
@@ -45,7 +50,16 @@ def comparador(a, zr, ng, width):
     # width insica o tamanho do vetor a
     @always_comb
     def comb():
-        pass
+        if a == 0:
+            zr.next = 1
+            ng.next = 0
+        # [width - 1] indica o bit mais significativo
+        elif a[width - 1] == 1: # se o bit mais significativo for 1
+            zr.next = 0
+            ng.next = 1
+        else:
+            zr.next = 0
+            ng.next = 0
 
     return instances()
 
@@ -54,7 +68,10 @@ def comparador(a, zr, ng, width):
 def zerador(z, a, y):
     @always_comb
     def comb():
-        pass
+        if z == 1:
+            y.next = 0
+        else:
+            y.next = a
 
     return instances()
 
@@ -63,7 +80,7 @@ def zerador(z, a, y):
 def add(a, b, q):
     @always_comb
     def comb():
-        pass
+        q.next = a + b
 
     return instances()
 
@@ -72,7 +89,7 @@ def add(a, b, q):
 def inc(a, q):
     @always_comb
     def comb():
-        pass
+        q.next = a + 1
 
     return instances()
 
@@ -115,18 +132,42 @@ def fullAdder(a, b, c, soma, carry):
 
 @block
 def addcla4(a, b, q):
+
+    new_a = [a(i) for i in range(4)]
+    new_b = [b(i) for i in range(4)]
+
+    z = 0
+
     @always_comb
     def comb():
-        pass
+        c =[z for i in range(4+1)]
+        
+        for i in range(4):
+            c[i+1] = (new_a[i] & new_b[i]) | (new_a[i] ^ new_b[i]) & c[i]
+            q.next[i] = new_a[i] ^ new_b[i] ^ c[i]
 
     return instances()
 
 
 @block
 def addcla16(a, b, q):
+    new_a = [a(i) for i in range(16)]
+    new_b = [b(i) for i in range(16)]
+
+    z = 0
+
     @always_comb
     def comb():
-        pass
+        c =[z for i in range(16+1)]
+        
+        for i in range(16):
+            c[i+1] = (new_a[i] & new_b[i]) | ((new_a[i] ^ new_b[i]) & c[i])
+            
+        if c[16] == 0:
+            for i in range(16):
+                q.next[i] = (new_a[i] ^ new_b[i]) ^ c[i]
+        else:
+            q.next = 0
 
     return instances()
 
@@ -144,3 +185,5 @@ def ula_new(x, y, c, zr, ng, sr, sf, bcd, saida, width=16):
 @block
 def bcdAdder(x, y, z):
     pass
+
+
